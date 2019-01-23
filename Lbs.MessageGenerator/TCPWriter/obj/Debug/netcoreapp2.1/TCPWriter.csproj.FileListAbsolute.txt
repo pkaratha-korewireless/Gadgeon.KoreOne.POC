@@ -1,0 +1,8 @@
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\bin\Debug\netcoreapp2.1\TCPWriter.deps.json
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\bin\Debug\netcoreapp2.1\TCPWriter.dll
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\bin\Debug\netcoreapp2.1\TCPWriter.pdb
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\obj\Debug\netcoreapp2.1\TCPWriter.csproj.CoreCompileInputs.cache
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\obj\Debug\netcoreapp2.1\TCPWriter.AssemblyInfoInputs.cache
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\obj\Debug\netcoreapp2.1\TCPWriter.AssemblyInfo.cs
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\obj\Debug\netcoreapp2.1\TCPWriter.dll
+C:\Users\pkaratha\source\repos\Lbs.MessageGenerator\TCPWriter\obj\Debug\netcoreapp2.1\TCPWriter.pdb
