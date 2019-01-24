@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Jsonp, Headers } from '@angular/http';
 import { Subject, Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
-import { ILocation } from '../interfaces/location';
+import { IVehicle } from '../interfaces/location';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -29,9 +29,9 @@ export class GoogleAPIService {
     return this.googleReadyObservable;
   };
 
-  getLocations(): Observable<ILocation> {
+  getLocations(): Observable<IVehicle[]> {
 
-    return this.http.get<ILocation>("http://localhost:3000/map").pipe(
+    return this.http.get<IVehicle[]>("http://localhost:3000/map").pipe(
       tap(data => console.log('Loc: ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
