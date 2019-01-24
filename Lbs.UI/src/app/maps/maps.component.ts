@@ -3,6 +3,7 @@ import { GoogleAPIService } from '../services/google-map.services'
 import { ICoord, IVehicle } from '../interfaces/location';
 import { interval } from 'rxjs'
 import { NotifierService } from 'angular-notifier';
+//import {} from '@types/googlemaps';
 
 
 declare const google: any;
@@ -33,7 +34,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     lat_init: Number = 10.0118;
     lng_init: Number = 76.3664;
 
-    zoom: Number = 12;
+    zoom: Number = 11;
     iMEI: Number
     speed: Number
     fuel: Number
@@ -42,15 +43,10 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     minFuelLevel: Number = 20;
     maxSpeed: Number = 100;
 
-    // coords: ICoord[] = [{
-    //     'lat': 10.0118,
-    //     'lng': 76.3664
-    // }];
-    // lat: Number[];
-    // lng: Number[];
-    // lat_init: Number = 10.0118;
-    // lng_init: Number = 76.3664;
-    // zoom: Number = 14;
+    polyLine: any[] = [];
+    markerPos: any[] = [];
+    vehicleMarker: any[] = [];
+    initFlag = false;
     initMap() {
         this.googleAPIService.googleReady()
             .subscribe(
@@ -60,9 +56,9 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
                     var myLatlng = new google.maps.LatLng(this.lat_init, this.lng_init);
                     const mapOptions = {
-                        zoom: 15,
+                        zoom: this.zoom,
                         center: myLatlng,
-                        scrollwheel: false, // we disable de scroll over the map, it is a really annoing when you scroll through page
+                        scrollwheel: true, // we disable de scroll over the map, it is a really annoing when you scroll through page
 
                         styles: [
                             { 'featureType': 'water', 'stylers': [{ 'saturation': 43 }, { 'lightness': -11 }, { 'hue': '#0088ff' }] },
@@ -91,65 +87,67 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                     };
                     try {
                         this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-                        let marker;
-                        marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(this.lat_init, this.lng_init),
-                            map: this.map,
-                            icon: this.marker_icon_url
-                        });
+                        
 
                         this.googleAPIService.getLocations().subscribe(
                             vehicleData => {
-                                //debugger;
                                 length = Object.keys(vehicleData).length
-                                console.log(length)
                                 vehicleData.forEach(vehicle => {
                                     this.vehicles.push(vehicle);
                                 });
-                                console.log(this.vehicles)
-                                console.log(this.vehicles[0].iMEI)
-                                console.log(this.vehicles[1].iMEI)
-                                console.log(this.vehicles[2].iMEI)
-                                
                                 
                             }
                         );
-
+                        let marker:any[]=[];
                         interval(2000).subscribe(a=> {this.googleAPIService.getLocations().subscribe(
                             vehicleUpdates => {
+                                if(!this.initFlag){
+                                    for (let i = 0; i < vehicleUpdates.length; i++){
+                                        marker.push(new google.maps.Marker({
+                                            position: new google.maps.LatLng(vehicleUpdates[i].location[0].lat, vehicleUpdates[i].location[0].lng),
+                                            map: this.map,
+                                            icon: this.marker_icon_url
+                                            }))
+                                    }
+                                    
+                                }
+                                this.initFlag = true;
                                 //debugger;
                                 for (let i = 0; i < vehicleUpdates.length; i++) {
                                     this.vehicles[i].fuel = vehicleUpdates[i].fuel
                                     this.vehicles[i].iMEI = vehicleUpdates[i].iMEI
                                     this.vehicles[i].speed = vehicleUpdates[i].speed
-                
-                                    // this.vehicleMarker[i].imei = vehicleUpdates[i].iMEI
-                
+                                
                                     vehicleUpdates[i].location.forEach(coordinate => {
                                         this.vehicles[i].location.push(coordinate)
                                     });
-                                    // for (let j = 0; j < vehicleUpdates[i].location.length; j++) {
-                                    //     this.vehicleMarker[j].lat = vehicleUpdates[i].location[j].lat
-                                    //     this.vehicleMarker[j].lon = vehicleUpdates[i].location[j].lon
-                                    // }
-                
-                
-                                    console.log("this.vehicles[i].fuel: "+ this.vehicles[i].fuel)
-                                    console.log("this.vehicles[i].iMEI: "+ this.vehicles[i].iMEI)
-                                    console.log("this.vehicles[i].speed: "+ this.vehicles[i].speed)
-                                    debugger;
-                                    //this.CheckSpeedLimit(this.vehicles[i]);
-                                    //this.CheckFuelLevel(this.vehicles[i]);
-                                    this.vehicles[i].location.forEach(element => {
-                                        console.log("this.vehicles[i].location.lat: "+element.lat )
-                                        console.log("this.vehicles[i].location.lon: "+element.lng )
-                
+                                    var flightPath = new google.maps.Polyline({
+                                        path: this.vehicles[i].location,
+                                        geodesic: true,
+                                        strokeColor: '#0000ff',
+                                        strokeOpacity: 1.0,
+                                        strokeWeight: 2
                                     });
-                
-                
+                                    this.polyLine.push(flightPath);
+                                    
+                                    this.polyLine.forEach(path => {
+                                        path.setMap(this.map);
+                                    });
+                                    console.log(marker[i])
+                                    myLatlng = new google.maps.LatLng(this.vehicles[i].location[this.vehicles[i].location.length-1].lat, this.vehicles[i].location[this.vehicles[i].location.length-1].lng);
+                                    marker[i].setPosition(myLatlng)
+
+                                    // var infowindow = new google.maps.InfoWindow();
+                                    // google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                                    // return function () {
+                                    //     infowindow.setContent(this.locations[i][0]);
+                                    //     infowindow.open(this.map, marker[i]);
+                                    // }
+                                    // })(marker));
                                 }
-                            }
-                        );})
+                            });
+                            
+                    });
                         //debugger;
                         // interval(2000).subscribe(a => {
                         //     this.googleAPIService.getLocations().subscribe(

@@ -37,8 +37,8 @@ router.get('/map', function(req, res, next) {
     "iMEI": "000013612345680",
     "location": 
         [{
-            "lat": 9.7774047 + Math.random()/100,
-            "lng": 76.4157906 + Math.random()/100
+            "lat": 9.8933309 + Math.random()/100,
+            "lng": 76.4254045 + Math.random()/100
         }],
     "fuel": getRandomInt(100),
     "speed": getRandomInt(150)
