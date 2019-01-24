@@ -21,6 +21,9 @@ import {AgmCoreModule} from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GoogleAPIService } from './services/google-map.services';
 import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   imports: [
@@ -32,9 +35,12 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     JsonpModule,
     HttpClientModule,
+    ApolloModule,
+    HttpLinkModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
-    })
+    }),
+    GraphQLModule
   ],
   declarations: [
     AppComponent,
