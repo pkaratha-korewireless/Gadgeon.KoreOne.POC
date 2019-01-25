@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
 import { GoogleAPIService } from '../services/google-map.services'
+import { alertNotifierService } from '../services/alert-notifier.service'
 import { ICoord, IVehicle } from '../interfaces/location';
 import { interval } from 'rxjs'
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +15,8 @@ declare const google: any;
 export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
 
-    constructor(private googleAPIService: GoogleAPIService, private toastr: ToastrService) { 
+    constructor(private googleAPIService: GoogleAPIService, private toastr: ToastrService,
+                private notifierService: alertNotifierService) { 
 
     }
     ngOnInit() {
@@ -28,16 +30,19 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public showErrorNotification(message: string, iMEI: Number ): void {
-        message = "Vehicle "+iMEI+": " + message;        
-        this.toastr.error(message, 'Alert!!', {
-            timeOut: 3000
-          });
+        message = "Vehicle "+iMEI+": " + message; 
+        this.notifierService.sendNotificationContent(message);       
+        // this.toastr.error(message, 'Alert!!', {
+        //     timeOut: 3000
+        //   });
     }
     public showWarningNotification(message: string, iMEI: Number ): void {
-        message = "Vehicle "+iMEI+": " + message;        
-        this.toastr.warning(message, 'Alert!!', {
-            timeOut: 3000
-          });
+        message = "Vehicle "+iMEI+": " + message;
+        debugger;
+        this.notifierService.sendNotificationContent(message);       
+        // this.toastr.warning(message, 'Alert!!', {
+        //     timeOut: 3000
+        //   });
     }
     
     CheckSpeedLimit(vehicle: IVehicle) {
@@ -169,7 +174,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                                     var flightPath = new google.maps.Polyline({
                                         path: this.vehicles[i].location,
                                         geodesic: true,
-                                        strokeColor: '#0000ff',
+                                        strokeColor: '#333333',
                                         strokeOpacity: 1.0,
                                         strokeWeight: 2
                                     });
@@ -181,7 +186,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                                     console.log(marker[i])
                                     myLatlng = new google.maps.LatLng(this.vehicles[i].location[this.vehicles[i].location.length-1].lat, this.vehicles[i].location[this.vehicles[i].location.length-1].lng);
                                     marker[i].setPosition(myLatlng)
-                                    debugger;
+                                    //debugger;
                                     var isSpeedError = this.CheckSpeedLimit(this.vehicles[i]);
                                     var isFuelError = this.CheckFuelLevel(this.vehicles[i]);
                                     // if (isError) {
@@ -195,7 +200,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
                                     // }
                                        
-                                    debugger;
+                                    //debugger;
                                     //marker[0].icon = this.marker_icon_url_error;
                                     
                                     //this.CheckFuelLevel(this.vehicles[i]);

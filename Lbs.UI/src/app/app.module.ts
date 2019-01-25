@@ -37,7 +37,6 @@ import { ToastrModule } from 'ngx-toastr';
     JsonpModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    //NotifierModule.withConfig(customNotifierOptions),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
     })
