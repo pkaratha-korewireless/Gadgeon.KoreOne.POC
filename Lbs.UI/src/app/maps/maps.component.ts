@@ -2,8 +2,7 @@ import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
 import { GoogleAPIService } from '../services/google-map.services'
 import { ICoord, IVehicle } from '../interfaces/location';
 import { interval } from 'rxjs'
-import { NotifierService } from 'angular-notifier';
-//import {} from '@types/googlemaps';
+import { ToastrService } from 'ngx-toastr';
 
 
 declare const google: any;
@@ -14,10 +13,9 @@ declare const google: any;
 })
 export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
-    private notifier: NotifierService;
 
-    constructor(private googleAPIService: GoogleAPIService, notifier: NotifierService) { 
-        this.notifier = notifier;
+    constructor(private googleAPIService: GoogleAPIService, private toastr: ToastrService) { 
+
     }
     ngOnInit() {
         this.initMap();
@@ -28,6 +26,48 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     ngOnDestroy() {
         console.log('Called Destroy');
     }
+
+    public showErrorNotification(message: string, iMEI: Number ): void {
+        message = "Vehicle "+iMEI+": " + message;        
+        this.toastr.error(message, 'Alert!!', {
+            timeOut: 3000
+          });
+    }
+    public showWarningNotification(message: string, iMEI: Number ): void {
+        message = "Vehicle "+iMEI+": " + message;        
+        this.toastr.warning(message, 'Alert!!', {
+            timeOut: 3000
+          });
+    }
+    
+    CheckSpeedLimit(vehicle: IVehicle) {
+        var flag = false;
+        if (vehicle.speed > this.maxSpeed) {
+            console.log("Speed Crossed Limits")
+            flag = true;
+            this.showErrorNotification('Speed Crossed Limits', vehicle.iMEI)
+        }
+        else
+            flag = false;
+        return flag;
+    }
+
+    CheckFuelLevel(vehicle: IVehicle) {
+        var flag = false;
+        if (vehicle.fuel < this.minFuelLevel) {
+            console.log("Fuel Level Low")
+            flag = true;
+            this.showWarningNotification('Fuel Level Extremely Low', vehicle.iMEI)
+        }
+        else
+            flag = false;
+        return flag;
+    }
+
+    updateContent(str: String) {
+        return str;
+    }
+
     map;
     coords: ICoord[] = [];
     vehicles: IVehicle[] = [];
@@ -35,17 +75,19 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     lng_init: Number = 76.3664;
 
     zoom: Number = 11;
-    iMEI: Number
-    speed: Number
-    fuel: Number
-    marker_icon_url: string = "./assets/img/car_icon_normal.png"
+    //iMEI: Number
+    //speed: Number
+    //fuel: Number
+    marker_icon_url_normal: string = "./assets/img/car_icon_normal.png"
+    marker_icon_url_error: string = "./assets/img/car_icon_red.png"
+
     
     minFuelLevel: Number = 20;
     maxSpeed: Number = 100;
 
     polyLine: any[] = [];
-    markerPos: any[] = [];
-    vehicleMarker: any[] = [];
+    //markerPos: any[] = [];
+    //vehicleMarker: any[] = [];
     initFlag = false;
     initMap() {
         this.googleAPIService.googleReady()
@@ -99,6 +141,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                             }
                         );
                         let marker:any[]=[];
+                        // let infowindow: any[] = [];
                         interval(2000).subscribe(a=> {this.googleAPIService.getLocations().subscribe(
                             vehicleUpdates => {
                                 if(!this.initFlag){
@@ -106,13 +149,15 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                                         marker.push(new google.maps.Marker({
                                             position: new google.maps.LatLng(vehicleUpdates[i].location[0].lat, vehicleUpdates[i].location[0].lng),
                                             map: this.map,
-                                            icon: this.marker_icon_url
+                                            icon: this.marker_icon_url_normal
                                             }))
                                     }
                                     
                                 }
                                 this.initFlag = true;
                                 //debugger;
+                                // let infowindow: any[] = [];
+                                // let contentString: String[] = [];
                                 for (let i = 0; i < vehicleUpdates.length; i++) {
                                     this.vehicles[i].fuel = vehicleUpdates[i].fuel
                                     this.vehicles[i].iMEI = vehicleUpdates[i].iMEI
@@ -136,47 +181,51 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                                     console.log(marker[i])
                                     myLatlng = new google.maps.LatLng(this.vehicles[i].location[this.vehicles[i].location.length-1].lat, this.vehicles[i].location[this.vehicles[i].location.length-1].lng);
                                     marker[i].setPosition(myLatlng)
-
-                                    // var infowindow = new google.maps.InfoWindow();
-                                    // google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                                    // return function () {
-                                    //     infowindow.setContent(this.locations[i][0]);
-                                    //     infowindow.open(this.map, marker[i]);
+                                    debugger;
+                                    var isSpeedError = this.CheckSpeedLimit(this.vehicles[i]);
+                                    var isFuelError = this.CheckFuelLevel(this.vehicles[i]);
+                                    // if (isError) {
+                                    //     marker[i].icon = this.marker_icon_url_error;
+                                    //     marker[i].setPosition(myLatlng)
                                     // }
-                                    // })(marker));
-                                }
-                            });
-                            
-                    });
-                        //debugger;
-                        // interval(2000).subscribe(a => {
-                        //     this.googleAPIService.getLocations().subscribe(
-                        //         result => {
-                        //             result.location.forEach(item => {
-                        //                 this.coords.push(result.location[0]);
-                        //                 this.lat_init = result.location[0].lat;
-                        //                 this.lng_init = result.location[0].lng;
-                        //                 myLatlng = new google.maps.LatLng(this.lat_init, this.lng_init);
-                        //             });
-                        //         });
-                        //     var flightPath = new google.maps.Polyline({
-                        //         path: this.coords,
-                        //         geodesic: true,
-                        //         strokeColor: '#0000ff',
-                        //         strokeOpacity: 1.0,
-                        //         strokeWeight: 2
-                        //     });
-                        //     flightPath.setMap(this.map);
-                        //     marker.setPosition(myLatlng);
-                        // });
+                                    // else{
+                                    //     marker[i].icon = this.marker_icon_url_normal;
 
-                        // var infowindow = new google.maps.InfoWindow();
-                        // google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                        //     return function () {
-                        //         infowindow.setContent(this.locations[i][0]);
-                        //         infowindow.open(this.map, marker);
-                        //     }
-                        // })(marker));
+                                    //     marker[i].setPosition(myLatlng)
+
+                                    // }
+                                       
+                                    debugger;
+                                    //marker[0].icon = this.marker_icon_url_error;
+                                    
+                                    //this.CheckFuelLevel(this.vehicles[i]);
+                                    
+                                    // contentString[0] = '<div id="content">'+
+                                    //                     '<b>Vehicle:'+this.vehicles[i].iMEI+'</b>'+
+                                    //                     '<p>Fuel:'+this.vehicles[i].fuel+'</p>'+
+                                    //                     '<p>Speed:'+this.vehicles[i].speed+'</p>'+
+                                    //                     '</div>';
+                                    
+                                    // infowindow.push(new google.maps.InfoWindow({
+                                    //     content: contentString
+                                    //   }));
+                                      
+                                    //   marker[i].addListener('click', function() {
+                                    //     infowindow[i].open(this.map, marker[i]);
+                                    //   });
+                              
+                                }
+                                // console.log(infowindow)
+                                //infowindow= [];
+                            });
+                            // var infowindow = new google.maps.InfoWindow({
+                            //     content: this.updateContent(contentstring[0]),
+                            // });
+                            // marker[0].addListener('click', function () {
+                            //     infowindow.open(this.map, marker[0]);
+                            // });
+                    });
+
                     }
                     catch (E) {
                         this.map = null;
