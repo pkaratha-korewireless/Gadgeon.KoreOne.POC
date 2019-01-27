@@ -1,11 +1,11 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, OnDestroy } from '@angular/core';
 import gql from 'graphql-tag';
 import { Subscription } from 'apollo-client/util/Observable';
 import { Apollo } from 'apollo-angular';
 import { ApiSubscribeService } from 'app/services/api-subscribe.service';
 
-const subQuery = gql`
-subscription{
+const subscription = gql`
+subscription alerts{
   limitExceeded{
     id
     imei
@@ -22,15 +22,28 @@ subscription{
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent implements OnInit {
-  @Output() notifications: any;
+export class NotificationsComponent implements OnInit, OnDestroy {
+  @Output() notifications: Array<any> = [];
   error: any;
   loading: boolean;
   private subSubscription: Subscription;
 
-  constructor(private subApi: ApiSubscribeService) { }
+  constructor(private apollo: Apollo) { }
 
   ngOnInit() {
-    this.notifications = this.subApi.subscribe();
+    this.subSubscription = this.apollo
+      .subscribe({
+        query: subscription
+      })
+      .subscribe(result => {
+        console.log(result)
+        this.notifications.push(result.data.limitExceeded);
+        // tslint:disable-next-line:no-debugger
+        // debugger;
+      });
+  }
+
+  ngOnDestroy() {
+    this.subSubscription.unsubscribe();
   }
 }

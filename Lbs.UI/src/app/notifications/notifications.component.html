@@ -22,15 +22,15 @@
                             </th>
                         </thead>
                         <tbody>
-                            <tr class="col-md-12">
+                            <tr class="col-md-12" *ngFor="let a of notifications.slice().reverse()">
                                 <td>
-                                    {{notifications.id}}
+                                    {{a.id}}
                                 </td>
                                 <td>
-                                    {{notifications.imei}}
+                                    {{a.imei}}
                                 </td>
                                 <td>
-                                    {{notifications.alert}}
+                                    {{a.alert}}
                                 </td>
                             </tr>
                         </tbody>

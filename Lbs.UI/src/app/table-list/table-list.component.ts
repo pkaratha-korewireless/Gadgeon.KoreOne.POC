@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, OnDestroy } from '@angular/core';
 import { Message } from '../interfaces/message'
 import { Observable } from 'rxjs';
 import { ApiGetService } from 'app/services/api-get.service';
@@ -32,7 +32,8 @@ query allMessages {
   templateUrl: './table-list.component.html',
   styleUrls: ['./table-list.component.css']
 })
-export class TableListComponent implements OnInit {
+export class TableListComponent implements OnInit, OnDestroy {
+  
   @Output() allMessages: any;
   error: any;
   loading: boolean;
@@ -47,9 +48,11 @@ export class TableListComponent implements OnInit {
       this.error = result.errors;
       this.loading = result.loading;
       this.allMessages = result.data && result.data.get;
-      // tslint:disable-next-line:no-debugger
-      debugger;
     })
+  }
+
+  ngOnDestroy(): void {
+    this.querySubscription.unsubscribe();
   }
 
 }
