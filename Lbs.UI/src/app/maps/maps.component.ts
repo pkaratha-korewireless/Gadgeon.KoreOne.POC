@@ -32,23 +32,20 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     public showErrorNotification(message: string, iMEI: Number ): void {
         message = "Vehicle "+iMEI+": " + message; 
         this.notifierService.sendNotificationContent(message);       
-        // this.toastr.error(message, 'Alert!!', {
-        //     timeOut: 3000
-        //   });
     }
-    public showWarningNotification(message: string, iMEI: Number ): void {
-        message = "Vehicle "+iMEI+": " + message;
-        debugger;
-        this.notifierService.sendNotificationContent(message);       
-        // this.toastr.warning(message, 'Alert!!', {
-        //     timeOut: 3000
-        //   });
-    }
+    // public showWarningNotification(message: string, iMEI: Number ): void {
+    //     message = "Vehicle "+iMEI+": " + message;
+    //     debugger;
+    //     this.notifierService.sendNotificationContent(message);       
+    //     this.toastr.warning(message, 'Alert!!', {
+    //         timeOut: 3000
+    //       });
+    // }
     
     CheckSpeedLimit(vehicle: IVehicle) {
         var flag = false;
         if (vehicle.speed > this.maxSpeed) {
-            console.log("Speed Crossed Limits")
+           console.log("Speed Crossed Limits")
             flag = true;
             this.showErrorNotification('Speed Crossed Limits', vehicle.iMEI)
         }
@@ -62,7 +59,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
         if (vehicle.fuel < this.minFuelLevel) {
             console.log("Fuel Level Low")
             flag = true;
-            this.showWarningNotification('Fuel Level Extremely Low', vehicle.iMEI)
+            this.showErrorNotification('Fuel Level Extremely Low', vehicle.iMEI)
         }
         else
             flag = false;
@@ -138,7 +135,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
                         this.googleAPIService.getLocations().subscribe(
                             vehicleData => {
-                                length = Object.keys(vehicleData).length
+                                //length = Object.keys(vehicleData).length
                                 vehicleData.forEach(vehicle => {
                                     this.vehicles.push(vehicle);
                                 });

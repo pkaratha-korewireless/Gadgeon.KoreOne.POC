@@ -18,10 +18,16 @@ import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import {AgmCoreModule} from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction'
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GoogleAPIService } from './services/google-map.services';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import * as moment from 'moment';
+
+
+let now = moment().format('LLLL');
+
 
 
 
@@ -39,7 +45,8 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
-    })
+    }),
+    AgmDirectionModule
   ],
   declarations: [
     AppComponent,

@@ -29,20 +29,19 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    ng-click="showNotifications($event)">
                         <i class="material-icons">notifications</i>
-                        <span class="notification">5</span>
+                        <span class="notification">{{ messageLen }}</span>
                         <p>
                             <span class="d-lg-none d-md-block">Some Actions</span>
                         </p>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" *ngFor="let message of messages">
-                        <!-- <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                        <a class="dropdown-item" href="#">Another Notification</a> -->
-                        <a class="dropdown-item" href="#">{{ message?.text }}</a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <li class="dropdown-item" *ngFor="let message of messages.reverse() | slice: 0: 5"><a href="/notifications">{{ message.text }}</a></li>
                     </div>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#pablo">

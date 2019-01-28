@@ -3,8 +3,7 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
 import { alertNotifierService } from '../../services/alert-notifier.service';
-import { Subscription, interval } from 'rxjs';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { interval } from 'rxjs';
 
 @Component({
     selector: 'app-navbar',
@@ -18,16 +17,37 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    messages: any[] = [];
+    public messages: any[] = [];
     messageLen: Number;
-    subscription: Subscription;
 
     constructor(location: Location, private element: ElementRef, private router: Router, private notifierService: alertNotifierService) {
         this.location = location;
         this.sidebarVisible = false;
-        //this.subscription = 
-
     }
+
+    // showNotifications(){
+    //     var opened;
+	//     var newNotifications = [];
+	//     var readNotifications = [];
+    //     var awaitingNotifications;
+    //     newNotifications = this.messages
+    //     function(event: any){
+	// 		var targeted = angular.element($event.target).closest('.dropdown-container').find('.dropdown-menu');
+	// 		opendd = targetdd;
+	// 	    if(targetdd.hasClass('fadeInDown')){
+	// 	    	hidedd(targetdd);
+	// 	    }
+	// 	    else{
+	// 	    	targetdd.css('display', 'block').removeClass('fadeOutUp').addClass('fadeInDown')
+	// 	    									.on('animationend webkitAnimationEnd oanimationend MSAnimationEnd', function(){
+	//   												angular.element(this).show();
+	//   											});
+    //       targetdd.find('.dropdown-body')[0].scrollTop = 0;
+	// 	    	$scope.awaitingNotifications = 0;
+	// 	      	angular.element('#notifications-count').removeClass('fadeIn').addClass('fadeOut');
+	// 	    }
+	// 	};
+    // }
 
 
     ngOnInit() {
@@ -45,14 +65,17 @@ export class NavbarComponent implements OnInit {
         });
         interval(5000).subscribe(a => {
             this.notifierService.getNotificationContent().subscribe(message => {
+                debugger;
+                console.log(message);
                 this.messages.push(message);
                 console.log("message: ", this.messages)
+                this.messageLen = this.messages.length;
+               // this.messages = this.messages.slice(0, this.messages.length);
+                console.log(this.messages);
+                console.log("messageLength: ", this.messageLen)
             })
         });
-        //this.messageLen = this.messages.length;
-        debugger;
-        console.log("message: ", this.messages)
-        console.log("messageLength: ", this.messageLen)
+        
     }
 
     sidebarOpen() {
