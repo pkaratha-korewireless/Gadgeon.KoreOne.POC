@@ -25,31 +25,6 @@ export class NavbarComponent implements OnInit {
         this.sidebarVisible = false;
     }
 
-    // showNotifications(){
-    //     var opened;
-	//     var newNotifications = [];
-	//     var readNotifications = [];
-    //     var awaitingNotifications;
-    //     newNotifications = this.messages
-    //     function(event: any){
-	// 		var targeted = angular.element($event.target).closest('.dropdown-container').find('.dropdown-menu');
-	// 		opendd = targetdd;
-	// 	    if(targetdd.hasClass('fadeInDown')){
-	// 	    	hidedd(targetdd);
-	// 	    }
-	// 	    else{
-	// 	    	targetdd.css('display', 'block').removeClass('fadeOutUp').addClass('fadeInDown')
-	// 	    									.on('animationend webkitAnimationEnd oanimationend MSAnimationEnd', function(){
-	//   												angular.element(this).show();
-	//   											});
-    //       targetdd.find('.dropdown-body')[0].scrollTop = 0;
-	// 	    	$scope.awaitingNotifications = 0;
-	// 	      	angular.element('#notifications-count').removeClass('fadeIn').addClass('fadeOut');
-	// 	    }
-	// 	};
-    // }
-
-
     ngOnInit() {
 
         this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -65,7 +40,7 @@ export class NavbarComponent implements OnInit {
         });
         interval(5000).subscribe(a => {
             this.notifierService.getNotificationContent().subscribe(message => {
-                debugger;
+                //debugger;
                 console.log(message);
                 this.messages.push(message);
                 console.log("message: ", this.messages)
