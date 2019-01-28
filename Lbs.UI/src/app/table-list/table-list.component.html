@@ -12,7 +12,7 @@
                             <table class="table table-hover">
                                 <thead>
                                     <th>
-                                        ID
+                                        Time
                                     </th>
                                     <th>
                                         IMEI
@@ -24,16 +24,16 @@
                                         Fuel
                                     </th>
                                     <th>
-                                        Actual Date
+                                        Temperature
                                     </th>
                                 </thead>
                                 <tbody>
                                     <tr class="col-md-12" *ngFor="let a of allMessages">
                                         <td>
-                                            {{a.id}}
+                                            {{a.actual_date}}
                                         </td>
                                         <td>
-                                            {{a.iMEI}}
+                                            {{a.imei}}
                                         </td>
                                         <td>
                                             {{a.speed}}
@@ -42,7 +42,7 @@
                                             {{a.fuel}}
                                         </td>
                                         <td>
-                                            {{a.actualDate}}
+                                            {{a.temperature}}
                                         </td>
                                     </tr>
                                 </tbody>

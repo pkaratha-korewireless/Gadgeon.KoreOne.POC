@@ -11,18 +11,15 @@ const getQuery = gql`
 query allMessages {
   get {
     id
-    iMEI
-    actualDate
+    imei
+    actual_date
     latitude
     longitude
     direction
     odometer
     speed
-    analog
-    eventCode
-    textM
+    temperature
     fuel
-    temp2
     voltage
   }
 }
@@ -45,6 +42,7 @@ export class TableListComponent implements OnInit, OnDestroy {
     this.querySubscription = this.apollo.watchQuery<any>({
       query: getQuery
     }).valueChanges.subscribe(result => {
+      console.log(result);
       this.error = result.errors;
       this.loading = result.loading;
       this.allMessages = result.data && result.data.get;

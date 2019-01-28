@@ -3,17 +3,22 @@ import { Apollo } from 'apollo-angular';
 import { Subscription } from 'apollo-client/util/Observable';
 import gql from 'graphql-tag';
 import { AlertService } from './services/alert.service';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 const subscription = gql`
 subscription alerts{
   limitExceeded{
     id
     imei
-    alert
-    eventGuid
-    fuel
+    actual_date
+    latitude
+    longitude
+    direction
+    odometer
     speed
-    timestamp
+    temperature
+    fuel
+    voltage
   }
 }`;
 
@@ -25,6 +30,7 @@ subscription alerts{
 export class AppComponent implements OnInit, OnDestroy {
 
   private subSubscription: Subscription;
+  private message: any;
 
   constructor(private apollo: Apollo, private alertService: AlertService) { }
 
@@ -35,7 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
       })
       .subscribe(result => {
         console.log(result);
-        this.alertService.notifications.push(result.data.limitExceeded);
+        this.message = result.data.limitExceeded;
+        this.alertService.device_messages.push(this.message);
+        if (this.message.speed > 50 || this.message.fuel < 3) {
+          this.alertService.notifications.push(this.message);
+        }
         // tslint:disable-next-line:no-debugger
         // debugger;
       });

@@ -18,7 +18,7 @@ namespace PoC.Data.Service
         public MessageService(ICassandraRepository cassandraRepository)
         {
             _cassandraRepository = cassandraRepository;
-            AllEvents = new ConcurrentStack<MessageEvent>();
+            AllEvents = new ConcurrentStack<Message>();
         }
         public IEnumerable<Message> Get()
         {
@@ -28,36 +28,27 @@ namespace PoC.Data.Service
         public Message AddMessage(Message message)
         {
             _cassandraRepository.AddMessage(message);
-            if (message.Speed > 50 || message.Fuel<2)
-            {
-                string alert = "";
-                alert = (message.Speed > 50) ? "Speed Exceeded" : "";
-                alert = (message.Fuel < 2) ? ((alert=="")?"Low Fuel":alert+"|Low Fuel") : alert;
-                var messageEvent =
-                new MessageEvent(message.Id, message.IMEI, message.Speed,message.Fuel, message.ActualDate, alert);
-
-                this.AddEvent(messageEvent);
-            }
+            this.AddEvent(message);
             return message;
         }
 
 
-        private readonly System.Reactive.Subjects.ISubject<MessageEvent> _eventStream = new ReplaySubject<MessageEvent>(1);
-        public ConcurrentStack<MessageEvent> AllEvents { get; }
+        private readonly System.Reactive.Subjects.ISubject<Message> _eventStream = new ReplaySubject<Message>(1);
+        public ConcurrentStack<Message> AllEvents { get; }
 
         public void AddError(Exception exception)
         {
             _eventStream.OnError(exception);
         }
 
-        public MessageEvent AddEvent(MessageEvent messageEvent)
+        public Message AddEvent(Message message)
         {
-            AllEvents.Push(messageEvent);
-            _eventStream.OnNext(messageEvent);
-            return messageEvent;
+            AllEvents.Push(message);
+            _eventStream.OnNext(message);
+            return message;
         }
 
-        public IObservable<MessageEvent> EventStream()
+        public IObservable<Message> EventStream()
         {
             return _eventStream.AsObservable();
         }

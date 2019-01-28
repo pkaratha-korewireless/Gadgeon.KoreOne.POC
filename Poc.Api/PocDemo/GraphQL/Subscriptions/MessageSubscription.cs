@@ -22,20 +22,20 @@ namespace PoC.Api.GraphQL.Subscriptions
             AddField(new EventStreamFieldType
             {
                 Name = "limitExceeded",
-                Type = typeof(MessageEventType),
-                Resolver = new FuncFieldResolver<MessageEvent>(ResolveMessageEvent),
-                Subscriber = new EventStreamResolver<MessageEvent>(Subscribe)
+                Type = typeof(MessageType),
+                Resolver = new FuncFieldResolver<Message>(ResolveMessageEvent),
+                Subscriber = new EventStreamResolver<Message>(Subscribe)
             });
         }
 
-        private IObservable<MessageEvent> Subscribe(ResolveEventStreamContext ctx)
+        private IObservable<Message> Subscribe(ResolveEventStreamContext ctx)
         {
             return _events.EventStream();
         }
 
-        private MessageEvent ResolveMessageEvent(ResolveFieldContext ctx)
+        private Message ResolveMessageEvent(ResolveFieldContext ctx)
         {
-            var message = ctx.Source as MessageEvent;
+            var message = ctx.Source as Message;
             return message;
         }
     }

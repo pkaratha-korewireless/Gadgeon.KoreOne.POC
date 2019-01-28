@@ -1,13 +1,13 @@
 <div class="main-content">
-  <div class="container-fluid">
-      <div class="card">
-          <div class="card-header card-header-danger">
-              <h3 class="card-title">Notifications</h3>
-              <p class="card-category">Alerts for breaching limit will appear here
-                 </p>
-          </div>
-          
-          <div class="card-body">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h3 class="card-title">Notifications</h3>
+                <p class="card-category">Alerts for breaching limit will appear here
+                </p>
+            </div>
+
+            <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -18,7 +18,10 @@
                                 IMEI
                             </th>
                             <th>
-                                Alert
+                                Speed
+                            </th>
+                            <th>
+                                Fuel
                             </th>
                         </thead>
                         <tbody>
@@ -30,7 +33,10 @@
                                     {{a.imei}}
                                 </td>
                                 <td>
-                                    {{a.alert}}
+                                    {{a.speed}}
+                                </td>
+                                <td>
+                                    {{a.fuel}}
                                 </td>
                             </tr>
                         </tbody>
@@ -38,6 +44,6 @@
                     </table>
                 </div>
             </div>
-      </div>
-  </div>
+        </div>
+    </div>
 </div>
