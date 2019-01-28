@@ -27,6 +27,8 @@ import { GraphQLModule } from './graphql.module';
 import { ApiGetService } from './services/api-get.service';
 import { TableElementComponent } from './table-list/elements/table-element/table-element.component';
 import { ApiSubscribeService } from './services/api-subscribe.service';
+import { AlertServiceService } from './services/alert-service.service';
+import { AlertService } from './services/alert.service';
 
 @NgModule({
   imports: [
@@ -49,7 +51,7 @@ import { ApiSubscribeService } from './services/api-subscribe.service';
     AppComponent,
     AdminLayoutComponent
   ],
-  providers: [GoogleAPIService, ApiGetService, ApiSubscribeService],
+  providers: [GoogleAPIService, ApiGetService, ApiSubscribeService, AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

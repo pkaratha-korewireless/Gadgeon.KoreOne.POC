@@ -33,7 +33,7 @@ query allMessages {
   styleUrls: ['./table-list.component.css']
 })
 export class TableListComponent implements OnInit, OnDestroy {
-  
+
   @Output() allMessages: any;
   error: any;
   loading: boolean;
