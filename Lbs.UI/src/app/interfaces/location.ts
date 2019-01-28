@@ -11,3 +11,9 @@ export interface ICoord{
     lat: Number,
     lng: Number
 }
+
+export interface ISpeed{
+    device:any;
+    speed:number;
+
+}

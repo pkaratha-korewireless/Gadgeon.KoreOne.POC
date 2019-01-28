@@ -24,7 +24,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { GraphQLModule } from './graphql.module';
+import{ChartModule} from 'angular2-highcharts';
+import * as highcharts from 'highcharts';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 
+
+
+
+export function highchartsFactory() {
+  return highcharts;
+}
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -37,6 +46,8 @@ import { GraphQLModule } from './graphql.module';
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
+    ChartModule,
+    
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
     }),
@@ -47,7 +58,19 @@ import { GraphQLModule } from './graphql.module';
     AdminLayoutComponent
 
   ],
-  providers: [GoogleAPIService],
+  exports: [
+		
+		ChartModule,
+		
+	],
+  providers: [
+    {
+			provide: HighchartsStatic,
+      useFactory: highchartsFactory
+		},
+    
+    GoogleAPIService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
