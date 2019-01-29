@@ -24,6 +24,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { GraphQLModule } from './graphql.module';
+import { ApiGetService } from './services/api-get.service';
+import { TableElementComponent } from './table-list/elements/table-element/table-element.component';
+import { ApiSubscribeService } from './services/api-subscribe.service';
+import { AlertServiceService } from './services/alert-service.service';
+import { AlertService } from './services/alert.service';
 
 @NgModule({
   imports: [
@@ -45,9 +50,8 @@ import { GraphQLModule } from './graphql.module';
   declarations: [
     AppComponent,
     AdminLayoutComponent
-
   ],
-  providers: [GoogleAPIService],
+  providers: [GoogleAPIService, ApiGetService, ApiSubscribeService, AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

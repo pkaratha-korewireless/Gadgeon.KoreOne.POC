@@ -17,6 +17,7 @@ namespace PoC.Api.GraphQL
             {typeof(float), typeof(FloatGraphType)},
             {typeof(decimal), typeof(DecimalGraphType)},
             {typeof(Guid), typeof(IdGraphType)},
+            {typeof(Guid?), typeof(IdGraphType)},
             {typeof(double), typeof(FloatGraphType)},
             {typeof(DateTime), typeof(DateTimeGraphType)}
 

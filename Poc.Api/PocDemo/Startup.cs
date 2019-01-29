@@ -75,6 +75,10 @@ namespace Poc.Api
 
             services.AddSingleton<ICassandraRepository, CassandraRepository>();
             services.AddMvc();
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder =>
+          builder.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +90,8 @@ namespace Poc.Api
             app.UseStaticFiles();
 
             app.UseWebSockets();
+
+            app.UseCors("AllowAllOrigins");
 
             // use websocket middleware for ChatSchema at path /graphql
             app.UseGraphQLWebSockets<PoCSchema>("/graphql");

@@ -13,8 +13,8 @@ namespace PoC.Data.Repository
     public class CassandraRepository : ICassandraRepository
     {
         private readonly string END_POINT = "127.0.0.1";
-        private readonly string KEY_SPACE = "pocdemo";
-        private readonly string TABLE_NAME = "messagesdemo";
+        private readonly string KEY_SPACE = "koreone";
+        private readonly string TABLE_NAME = "device_messages";
 
         private Cluster cluster;
         private ISession session;
@@ -29,28 +29,23 @@ namespace PoC.Data.Repository
 
         public Message AddMessage(Message message)
         {
-            var timestamp = ConvertToTimestamp(message.ActualDate);
-            var query = $"INSERT INTO {TABLE_NAME}" +
-                $"(id,imei,actualdate,latitude,longitude,direction,odometer,speed,analog,eventcode,textm,fuel,temp2,voltage)" +
+            //Convert datetime to timestamp
+            var timestamp = message.actual_date;
+            var query = $"INSERT INTO {KEY_SPACE}.{TABLE_NAME}" +
+                $"(id,imei,actual_date,latitude,longitude,direction,odometer,speed,temperature,fuel,voltage)" +
                 $" VALUES" +
-                $"({message.Id},'{message.IMEI}',{timestamp},{message.Latitude},{message.Longitude}" +
-                $",{message.Direction},{message.Odometer},{message.Speed},{message.Analog},{message.EventCode}" +
-                $",{message.textM},{message.Fuel},{message.Temp2},{message.Voltage});";
+                $"(uuid(),'{message.imei}',{message.actual_date},{message.latitude},{message.longitude}" +
+                $",{message.direction},{message.odometer},{message.speed},{message.temperature},{message.fuel}" +
+                $",{message.voltage});";
             var result = session.Execute(query);
             return message;
         }
 
         public IEnumerable<T> Get<T>()
         {
-            var query = $"select * from {TABLE_NAME} limit 20;";
+            var query = $"select * from {KEY_SPACE}.{TABLE_NAME} limit 20;";
             IEnumerable<T> result = mapper.Fetch<T>(query);
             return result;
-        }
-
-        private long ConvertToTimestamp(DateTime value)
-        {
-            long epoch = (value.Ticks - 621355968000000000) / 10000000;
-            return epoch;
         }
 
     }
