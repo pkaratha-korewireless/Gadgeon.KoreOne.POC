@@ -18,6 +18,7 @@ import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import {AgmCoreModule} from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction'
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GoogleAPIService } from './services/google-map.services';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,7 +28,7 @@ import { GraphQLModule } from './graphql.module';
 import { ApiGetService } from './services/api-get.service';
 import { TableElementComponent } from './table-list/elements/table-element/table-element.component';
 import { ApiSubscribeService } from './services/api-subscribe.service';
-import { AlertServiceService } from './services/alert-service.service';
+//import { AlertServiceService } from './services/alert-service.service';
 import { AlertService } from './services/alert.service';
 
 @NgModule({
