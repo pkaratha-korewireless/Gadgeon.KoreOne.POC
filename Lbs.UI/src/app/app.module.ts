@@ -22,15 +22,14 @@ import { AgmDirectionModule } from 'agm-direction'
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GoogleAPIService } from './services/google-map.services';
 import { HttpClientModule } from '@angular/common/http';
-import { ToastrModule } from 'ngx-toastr';
-import * as moment from 'moment';
-
-
-let now = moment().format('LLLL');
-
-
-
-
+import { ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { GraphQLModule } from './graphql.module';
+import { ApiGetService } from './services/api-get.service';
+import { TableElementComponent } from './table-list/elements/table-element/table-element.component';
+import { ApiSubscribeService } from './services/api-subscribe.service';
+//import { AlertServiceService } from './services/alert-service.service';
+import { AlertService } from './services/alert.service';
 
 @NgModule({
   imports: [
@@ -42,18 +41,18 @@ let now = moment().format('LLLL');
     AppRoutingModule,
     JsonpModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
+    ApolloModule,
+    HttpLinkModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
     }),
-    AgmDirectionModule
+    GraphQLModule
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent
-
   ],
-  providers: [GoogleAPIService],
+  providers: [GoogleAPIService, ApiGetService, ApiSubscribeService, AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

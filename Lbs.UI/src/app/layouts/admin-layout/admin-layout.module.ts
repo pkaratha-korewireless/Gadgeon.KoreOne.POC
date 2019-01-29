@@ -20,6 +20,7 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
+import { TableElementComponent } from 'app/table-list/elements/table-element/table-element.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -41,6 +42,7 @@ import {
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    TableElementComponent
   ]
 })
 

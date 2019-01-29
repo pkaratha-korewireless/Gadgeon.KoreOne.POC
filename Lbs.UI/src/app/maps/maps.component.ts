@@ -3,7 +3,7 @@ import { GoogleAPIService } from '../services/google-map.services'
 import { alertNotifierService } from '../services/alert-notifier.service'
 import { ICoord, IVehicle } from '../interfaces/location';
 import { interval } from 'rxjs'
-import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
 
 
 declare const google: any;
@@ -15,7 +15,7 @@ declare const google: any;
 export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
 
-    constructor(private googleAPIService: GoogleAPIService, private toastr: ToastrService,
+    constructor(private googleAPIService: GoogleAPIService,
         private notifierService: alertNotifierService) {
 
     }
