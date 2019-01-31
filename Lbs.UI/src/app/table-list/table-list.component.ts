@@ -9,7 +9,7 @@ import { Subscription } from 'apollo-client/util/Observable';
 
 const getQuery = gql`
 query allMessages {
-  get {
+  get_cassandra_data {
     id
     imei
     actual_date
@@ -36,7 +36,7 @@ export class TableListComponent implements OnInit, OnDestroy {
   loading: boolean;
   private querySubscription: Subscription;
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private apiGetService: ApiGetService) { }
 
   ngOnInit() {
     this.querySubscription = this.apollo.watchQuery<any>({
@@ -45,12 +45,31 @@ export class TableListComponent implements OnInit, OnDestroy {
       console.log(result);
       this.error = result.errors;
       this.loading = result.loading;
-      this.allMessages = result.data && result.data.get;
+      this.allMessages = result.data && result.data.get_cassandra_data;
     })
+
+    // TO DO:  use ApiGetService to get messages instead of directly using api in the component
+
+    // this.apiGetService
+    //     .getCassandraData()
+    //     .subscribe(messages => {
+    //       console.log(messages);
+    //       this.allMessages = messages;
+    //     }
+    //   );
+    // console.log(this.allMessages);
+    // this.getMessages();
+    // console.log(this.allMessages);
   }
 
   ngOnDestroy(): void {
     this.querySubscription.unsubscribe();
+  }
+
+  getMessages() {
+    const result = this.apiGetService.getCassandraData().subscribe(messages => {
+      this.allMessages = messages;
+    });
   }
 
 }

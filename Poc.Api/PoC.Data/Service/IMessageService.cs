@@ -8,7 +8,8 @@ namespace PoC.Data.Service
 {
     public interface IMessageService
     {
-        IEnumerable<Message> Get();
+        IEnumerable<Message> GetCassandraData();
+        IEnumerable<Message> GetElasticData();
         Message AddMessage(Message message);
 
         ConcurrentStack<Message> AllEvents { get; }

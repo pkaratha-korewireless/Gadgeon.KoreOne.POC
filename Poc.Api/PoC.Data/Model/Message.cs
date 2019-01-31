@@ -11,13 +11,13 @@ namespace PoC.Data.Model
         public Guid? id { get; set; }
         public string imei { get; set; }
         public DateTime actual_date { get; set; }
-        public float latitude { get; set; }
-        public float longitude { get; set; }
-        public float direction { get; set; }
-        public float odometer { get; set; }
-        public float speed { get; set; }
-        public float temperature { get; set; }
-        public float fuel { get; set; }
-        public float voltage { get; set; }
+        public decimal latitude { get; set; }
+        public decimal longitude { get; set; }
+        public decimal direction { get; set; }
+        public decimal odometer { get; set; }
+        public decimal speed { get; set; }
+        public decimal temperature { get; set; }
+        public decimal fuel { get; set; }
+        public decimal voltage { get; set; }
     }
 }

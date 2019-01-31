@@ -74,6 +74,7 @@ namespace Poc.Api
             }).AddWebSockets();//.AddDataLoader();
 
             services.AddSingleton<ICassandraRepository, CassandraRepository>();
+            services.AddSingleton<IElasticRepository, ElasticRepository>();
             services.AddMvc();
             services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder =>
           builder.AllowAnyOrigin()

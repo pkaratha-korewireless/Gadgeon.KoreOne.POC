@@ -7,7 +7,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 const subscription = gql`
 subscription alerts{
-  limitExceeded{
+  new_message{
     id
     imei
     actual_date
@@ -41,13 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
       })
       .subscribe(result => {
         console.log(result);
-        this.message = result.data.limitExceeded;
+        this.message = result.data.new_message;
         this.alertService.device_messages.push(this.message);
         if (this.message.speed > 50 || this.message.fuel < 3) {
           this.alertService.notifications.push(this.message);
         }
-        // tslint:disable-next-line:no-debugger
-        // debugger;
       });
   }
 

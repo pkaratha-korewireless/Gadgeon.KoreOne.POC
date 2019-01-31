@@ -1,9 +1,9 @@
 import { Timestamp } from 'rxjs/Rx';
 
 export interface Message {
-    id: number;
-    iMEI: string;
-    actualDate: Timestamp<string>;
+    id: string;
+    imei: string;
+    actual_date: Timestamp<string>;
     latitude: number;
     longitude: number;
     direction: number;
