@@ -2,7 +2,6 @@ import { Component, OnInit, Output, OnDestroy, forwardRef } from '@angular/core'
 import gql from 'graphql-tag';
 import { Subscription } from 'apollo-client/util/Observable';
 import { Apollo } from 'apollo-angular';
-import { ApiSubscribeService } from 'app/services/api-subscribe.service';
 import { AlertService } from 'app/services/alert.service';
 
 // const subscription = gql`

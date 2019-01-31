@@ -14,8 +14,14 @@ namespace PoC.Api.GraphQL.Queries
         {
             Name = "MessageQuery";
             Field<ListGraphType<MessageType>>(
-                name: "Get",
-                resolve: context => messageService.Get());
+                name: "get_cassandra_data",
+                description:"Get last 20 rows from cassandra table",
+                resolve: context => messageService.GetCassandraData());
+
+            Field<ListGraphType<MessageType>>(
+                name: "get_elastic_data",
+                description: "Get data from elastic search indices",
+                resolve: context => messageService.GetElasticData());
         }
     }
 }

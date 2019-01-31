@@ -21,7 +21,7 @@ namespace PoC.Api.GraphQL.Subscriptions
             Name = "MessageSubscription";
             AddField(new EventStreamFieldType
             {
-                Name = "limitExceeded",
+                Name = "new_message",
                 Type = typeof(MessageType),
                 Resolver = new FuncFieldResolver<Message>(ResolveMessageEvent),
                 Subscriber = new EventStreamResolver<Message>(Subscribe)
