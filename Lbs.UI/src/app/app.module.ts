@@ -18,18 +18,27 @@ import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import {AgmCoreModule} from '@agm/core';
-import { AgmDirectionModule } from 'agm-direction'
+//import { AgmDirectionModule } from 'agm-direction'
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GoogleAPIService } from './services/google-map.services';
 import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { GraphQLModule } from './graphql.module';
+import{ChartModule} from 'angular2-highcharts';
+import * as highcharts from 'highcharts';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { ApiGetService } from './services/api-get.service';
 import { TableElementComponent } from './table-list/elements/table-element/table-element.component';
-import { ApiSubscribeService } from './services/api-subscribe.service';
+//import { ApiSubscribeService } from './services/api-subscribe.service';
 import { AlertService } from './services/alert.service';
 
+
+
+
+export function highchartsFactory() {
+  return highcharts;
+}
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -42,6 +51,8 @@ import { AlertService } from './services/alert.service';
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
+    ChartModule,
+    
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
     }),
@@ -51,7 +62,20 @@ import { AlertService } from './services/alert.service';
     AppComponent,
     AdminLayoutComponent
   ],
-  providers: [GoogleAPIService, ApiGetService, AlertService],
+  exports: [
+		
+		ChartModule,
+		
+	],
+  providers: [GoogleAPIService, ApiGetService, AlertService,
+    {
+			provide: HighchartsStatic,
+      useFactory: highchartsFactory
+		},
+    
+    GoogleAPIService,
+  ],
+ 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
