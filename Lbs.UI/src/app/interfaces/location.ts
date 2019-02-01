@@ -1,10 +1,9 @@
-export interface ILocation
+export interface IVehicle
 {
     iMEI: Number,
     location: ICoord[],
-    direction: Number,
     speed: Number,
-    fuel: Number
+    fuel: Number,
 }
 
 export interface ICoord{

@@ -12,13 +12,10 @@ namespace PoC.Api.GraphQL.Types
         public MessageEventType()
         {
             Name = "MessageEvent";
-            Field(e => e.EventGuid);
-            Field(e => e.Id);
-            Field(e => e.Imei);
-            Field(e => e.Speed);
-            Field(e => e.Fuel);
-            Field(e => e.Timestamp);
-            Field(e => e.Alert);
+            foreach (var prop in typeof(MessageEvent).GetProperties())
+            {
+                Field(prop.Name, x => prop.GetValue(x), type: Helper.Map[prop.PropertyType]);
+            }
         }
     }
 }

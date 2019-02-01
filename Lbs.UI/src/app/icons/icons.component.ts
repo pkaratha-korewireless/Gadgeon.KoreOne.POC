@@ -1,5 +1,27 @@
+import { Component, OnInit, Output,OnDestroy ,ViewChild} from '@angular/core';
+import gql from 'graphql-tag';
+import { Subscription } from 'apollo-client/util/Observable';
+import { Apollo } from 'apollo-angular';
 
-import {Component,Output,ViewChild,OnInit} from '@angular/core';
+const getQuery = gql`
+query allMessages {
+  get_elastic_data {
+    id
+    imei
+    actual_date
+    latitude
+    longitude
+    direction
+    odometer
+    speed
+    temperature
+    fuel
+    voltage
+  }
+}
+`;
+
+
 import { LiveBarchartServiceService } from '../services/live-barchart-service.service';
 import * as Highcharts from 'highcharts';
 import Drilldown from 'highcharts/modules/drilldown';

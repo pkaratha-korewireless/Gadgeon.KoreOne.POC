@@ -8,23 +8,23 @@ namespace PoC.Data.Model
 {
     public class MessageEvent
     {
-        public MessageEvent(int id, string imei, decimal speed, int fuel,DateTime timestamp, string alert)
+        public MessageEvent(Guid id, string imei, float speed, float fuel,DateTime actual_date, string alert)
         {
-            Id = id;
-            Imei = imei;
-            Speed = speed;
-            Fuel = fuel;
-            Timestamp = timestamp;
-            Alert = alert;
+            this.id = id;
+            this.imei = imei;
+            this.speed = speed;
+            this.fuel = fuel;
+            this.actual_date = actual_date;
+            this.alert = alert;
             EventGuid = Guid.NewGuid().ToString();
         }
 
-        public int Id { get; set; }
+        public Guid id  { get; set; }
         public string EventGuid { get; set; }
-        public string Imei { get; set; }
-        public decimal Speed { get; set; }
-        public int Fuel { get; set; }
-        public DateTime Timestamp { get; private set; }
-        public string Alert { get; set; }
+        public string imei { get; set; }
+        public float speed { get; set; }
+        public float fuel { get; set; }
+        public DateTime actual_date { get; private set; }
+        public string alert { get; set; }
     }
 }
