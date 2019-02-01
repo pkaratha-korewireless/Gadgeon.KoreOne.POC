@@ -20,7 +20,9 @@ import {
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule,MatTableModule
+  MatSelectModule,MatTableModule,
+  MatPaginatorModule
+  
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import {
     MatSelectModule,
     MatTooltipModule,
     MatTableModule,
+    MatPaginatorModule,
+    
     ChartModule.forRoot(highcharts)
   ],
   declarations: [
