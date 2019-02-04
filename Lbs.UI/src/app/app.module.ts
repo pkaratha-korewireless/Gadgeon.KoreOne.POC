@@ -36,6 +36,7 @@ import { AlertService } from './services/alert.service';
 
 
 
+
 export function highchartsFactory() {
   return highcharts;
 }
@@ -60,7 +61,8 @@ export function highchartsFactory() {
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+   
   ],
   exports: [
 		
