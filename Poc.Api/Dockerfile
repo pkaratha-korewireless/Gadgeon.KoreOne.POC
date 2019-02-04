@@ -1,18 +1,21 @@
-FROM microsoft/dotnet:2.1-sdk
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
-
-# copy csproj and restore as distinct layers
-WORKDIR /app/data
-COPY PoC.Data/*.csproj .
-RUN dotnet restore
-# copy and build everything else
-COPY PoC.Data/ .
-RUN dotnet publish -c Release -o out
-WORKDIR /app/api
-COPY PoCDemo/*.csproj ./
-RUN dotnet restore
-# copy and build everything else
-COPY PoCDemo/ ./
-RUN dotnet publish -c Release -o out
 EXPOSE 80
-ENTRYPOINT ["dotnet", "out/PoC.Api.dll"]	
+EXPOSE 443
+
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+COPY ["PocDemo/PoC.Api.csproj", "PocDemo/"]
+COPY ["Poc.Data/Poc.Data.csproj", "Poc.Data/"]
+RUN dotnet restore "PocDemo/PoC.Api.csproj"
+COPY . .
+WORKDIR "/src/PocDemo"
+RUN dotnet build "PoC.Api.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "PoC.Api.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "PoC.Api.dll"]
