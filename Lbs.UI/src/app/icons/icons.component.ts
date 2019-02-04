@@ -2,6 +2,7 @@ import { Component, OnInit, Output,OnDestroy ,ViewChild} from '@angular/core';
 import gql from 'graphql-tag';
 import { Subscription } from 'apollo-client/util/Observable';
 import { Apollo } from 'apollo-angular';
+import { ApiGetService } from 'app/services/api-get.service';
 
 const getQuery = gql`
 query allMessages {
@@ -31,15 +32,20 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 Exporting(Highcharts);
 @Component({
-  selector: 'app-icons',
+  selector: 'speed-analysis',
   templateUrl: './icons.component.html',
   styleUrls: ['./icons.component.css']
 })
 
 
 export class IconsComponent implements OnInit {
-  public chart: any;
 
+
+  @Output() allMessages: any;
+  error: any;
+  loading: boolean;
+  private querySubscription: Subscription;
+  public chart: any;
   speed: Number[] = [];
   options: Object;
   speedData: any;
@@ -64,11 +70,25 @@ export class IconsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
   }
   //@Output() dataSource: any;
-  constructor(private livedata: LiveBarchartServiceService) {
+  constructor(private livedata: LiveBarchartServiceService,private apollo: Apollo, private apiGetService: ApiGetService) {
+
+
+
+
+    this.querySubscription = this.apollo.watchQuery<any>({
+      query: getQuery
+    }).valueChanges.subscribe(result => {
+      debugger;
+      console.log(result);
+      this.error = result.errors;
+      this.loading = result.loading;
+      this.allMessages = result.data && result.data.get_cassandra_data;
+    })
     //this.dataSource.paginator = this.paginator;
 
     this.livedata.getJSON().subscribe(data => {

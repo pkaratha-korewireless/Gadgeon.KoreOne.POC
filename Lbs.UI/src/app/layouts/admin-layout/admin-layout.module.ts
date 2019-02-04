@@ -13,6 +13,8 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ChartModule } from 'angular2-highcharts';
 import * as highcharts from 'highcharts';
+import {SafePipe} from '../../pipes/safe.pipe'
+
 
 import {
   MatButtonModule,
@@ -49,7 +51,8 @@ import { TableElementComponent } from 'app/table-list/elements/table-element/tab
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    TableElementComponent
+    TableElementComponent,
+    SafePipe
   ]
 })
 
