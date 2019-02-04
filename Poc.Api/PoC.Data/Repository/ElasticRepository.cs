@@ -20,11 +20,20 @@ namespace PoC.Data.Repository
         }
         public async Task<IEnumerable<Message>> Get()
         {
-            var searchResponse = await client.SearchAsync<Message>(s => s
+            var searchResponse = await client.SearchAsync<ElasticMessage>(s => s
             .From(0)
             .Query(q => q
             .Match(m=>m)));
-            return searchResponse.Documents;
+            //  Result from elastic index. List of ElasticMessage I guess ;p
+            var elasticlist = searchResponse.Documents;
+
+            var messagelist = new List<Message>();
+            foreach(var message in elasticlist)
+            {
+                // Mapping every element of ElaticMessage list to Message list
+                messagelist.Add(MessageMapper.Map(message));
+            }
+            return messagelist;
         }
     }
 }
