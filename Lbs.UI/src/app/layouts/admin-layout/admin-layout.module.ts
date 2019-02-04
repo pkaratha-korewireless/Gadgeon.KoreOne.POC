@@ -37,9 +37,8 @@ import { TableElementComponent } from 'app/table-list/elements/table-element/tab
     MatSelectModule,
     MatTooltipModule,
     MatTableModule,
-    MatPaginatorModule,
-    
-    ChartModule.forRoot(highcharts)
+    MatPaginatorModule, 
+    ChartModule
   ],
   declarations: [
     DashboardComponent,
