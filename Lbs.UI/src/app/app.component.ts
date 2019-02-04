@@ -43,9 +43,13 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log(result);
         this.message = result.data.limitExceeded;
         this.alertService.device_messages.push(this.message);
-        if (this.message.speed > 50 || this.message.fuel < 3) {
+
+        if (this.message.speed > 150 || this.message.fuel < 10) {
           this.alertService.notifications.push(this.message);
+          var messageData = this.message.imei + ": Limit Exceeded, Speed: "+ this.message.speed + " Fuel: "+this.message.fuel ;
+          this.alertService.alerts.push(messageData);
         }
+
         // tslint:disable-next-line:no-debugger
         // debugger;
       });

@@ -1,9 +1,11 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
 import { alertNotifierService } from '../../services/alert-notifier.service';
 import { interval } from 'rxjs';
+import { AlertService } from 'app/services/alert.service';
+
 
 @Component({
     selector: 'app-navbar',
@@ -17,10 +19,13 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    public messages: any[] = [];
     messageLen: Number;
 
-    constructor(location: Location, private element: ElementRef, private router: Router, private notifierService: alertNotifierService) {
+    @Output() notifications: Array<any> = [];
+    @Output() messages: any[] = [];
+
+    constructor(location: Location, private element: ElementRef, private router: Router, private notifierService: alertNotifierService,
+        private alertService: AlertService) {
         this.location = location;
         this.sidebarVisible = false;
     }
@@ -38,18 +43,8 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
         });
-        interval(5000).subscribe(a => {
-            this.notifierService.getNotificationContent().subscribe(message => {
-                //debugger;
-                console.log(message);
-                this.messages.push(message);
-                console.log("message: ", this.messages)
-                this.messageLen = this.messages.length;
-               // this.messages = this.messages.slice(0, this.messages.length);
-                console.log(this.messages);
-                console.log("messageLength: ", this.messageLen)
-            })
-        });
+
+        this.messages = this.alertService.alerts;
         
     }
 

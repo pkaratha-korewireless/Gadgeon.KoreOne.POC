@@ -30,11 +30,11 @@ namespace PoC.Data.Repository
         public Message AddMessage(Message message)
         {
             //Convert datetime to timestamp
-            var timestamp = message.actual_date;
+            var timestamp = ConvertToTimestamp(message.actual_date);
             var query = $"INSERT INTO {KEY_SPACE}.{TABLE_NAME}" +
                 $"(id,imei,actual_date,latitude,longitude,direction,odometer,speed,temperature,fuel,voltage)" +
                 $" VALUES" +
-                $"(uuid(),'{message.imei}',{message.actual_date},{message.latitude},{message.longitude}" +
+                $"(uuid(),'{message.imei}',{timestamp},{message.latitude},{message.longitude}" +
                 $",{message.direction},{message.odometer},{message.speed},{message.temperature},{message.fuel}" +
                 $",{message.voltage});";
             var result = session.Execute(query);
@@ -46,6 +46,11 @@ namespace PoC.Data.Repository
             var query = $"select * from {KEY_SPACE}.{TABLE_NAME} limit 20;";
             IEnumerable<T> result = mapper.Fetch<T>(query);
             return result;
+        }
+        private long ConvertToTimestamp(DateTime value)
+        {
+            long epoch = (value.Ticks - 621355968000000000) / 10000000;
+            return epoch;
         }
 
     }
