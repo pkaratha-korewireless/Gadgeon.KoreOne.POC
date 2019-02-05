@@ -30,6 +30,9 @@ import { TableElementComponent } from './table-list/elements/table-element/table
 import { ApiSubscribeService } from './services/api-subscribe.service';
 //import { AlertServiceService } from './services/alert-service.service';
 import { AlertService } from './services/alert.service';
+import * as moment from 'moment';
+import { MomentModule } from 'ngx-moment';
+
 
 @NgModule({
   imports: [
@@ -46,7 +49,8 @@ import { AlertService } from './services/alert.service';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
     }),
-    GraphQLModule
+    GraphQLModule,
+    MomentModule
   ],
   declarations: [
     AppComponent,

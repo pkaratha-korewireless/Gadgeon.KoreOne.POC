@@ -3,9 +3,11 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
 import { alertNotifierService } from '../../services/alert-notifier.service';
-import { interval } from 'rxjs';
 import { AlertService } from 'app/services/alert.service';
+import * as moment from 'moment';
 
+// let now = moment().format('LLLL');
+//let now = moment().fromNow();
 
 @Component({
     selector: 'app-navbar',
@@ -19,6 +21,7 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
+    //date: any = now;
     messageLen: Number;
 
     @Output() notifications: Array<any> = [];
@@ -45,7 +48,8 @@ export class NavbarComponent implements OnInit {
         });
 
         this.messages = this.alertService.alerts;
-        
+        //debugger;
+        console.log(this.messages);
     }
 
     sidebarOpen() {

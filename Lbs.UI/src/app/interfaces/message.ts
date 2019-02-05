@@ -16,3 +16,8 @@ export interface Message {
     temp2: number;
     voltage: number;
 }
+
+export interface IMessageData {
+    date: string
+    text: string
+}
