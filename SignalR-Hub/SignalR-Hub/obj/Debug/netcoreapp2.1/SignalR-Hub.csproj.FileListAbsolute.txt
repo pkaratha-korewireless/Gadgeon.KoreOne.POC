@@ -1,0 +1,14 @@
+E:\Dev\SignalR-Hub\SignalR-Hub\bin\Debug\netcoreapp2.1\SignalRHub.deps.json
+E:\Dev\SignalR-Hub\SignalR-Hub\bin\Debug\netcoreapp2.1\SignalRHub.runtimeconfig.json
+E:\Dev\SignalR-Hub\SignalR-Hub\bin\Debug\netcoreapp2.1\SignalRHub.runtimeconfig.dev.json
+E:\Dev\SignalR-Hub\SignalR-Hub\bin\Debug\netcoreapp2.1\SignalRHub.dll
+E:\Dev\SignalR-Hub\SignalR-Hub\bin\Debug\netcoreapp2.1\SignalRHub.pdb
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.csproj.CoreCompileInputs.cache
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.RazorAssemblyInfo.cache
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.RazorAssemblyInfo.cs
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.AssemblyInfoInputs.cache
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.AssemblyInfo.cs
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.RazorTargetAssemblyInfo.cache
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalRHub.dll
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalRHub.pdb
+E:\Dev\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.csprojAssemblyReference.cache
