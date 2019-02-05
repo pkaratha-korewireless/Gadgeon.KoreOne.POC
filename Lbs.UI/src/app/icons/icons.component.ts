@@ -41,14 +41,14 @@ Exporting(Highcharts);
 export class IconsComponent implements OnInit {
 
 
-  @Output() allMessages: any;
+  allMessages: any;
   error: any;
   loading: boolean;
   private querySubscription: Subscription;
   public chart: any;
   speed: Number[] = [];
   options: Object;
-  speedData: any;
+  speedData: any=[];
   jsonobject: any;
   tupplejson: any;
   lessthan20count: number = 0;
@@ -87,46 +87,44 @@ export class IconsComponent implements OnInit {
       console.log(result);
       this.error = result.errors;
       this.loading = result.loading;
-      this.allMessages = result.data && result.data.get_cassandra_data;
-    })
-    //this.dataSource.paginator = this.paginator;
-
-    this.livedata.getJSON().subscribe(data => {
-      this.speedData = data;
+     // this.allMessages = result.data || result.data.get_cassandra_data;
+      
+      this.speedData =  result.data && result.data.get_elastic_data;
+      console.log(this.speedData);
       for (var i = 0; i < this.speedData.length; i++) {
         if (this.speedData[i].speed <= 20) {
           this.lessthan20count++;
-          let tu = [{ 'device': this.speedData[i].iMEI, 'speed': this.speedData[i].speed }];
+          let tu = [{ 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed }];
           this.tuplelessthan20.push(tu);
           this.tuppleAll.push(tu);
         }
         else if (this.speedData[i].speed > 20 && this.speedData[i].speed <= 40) {
           this.lessthan40count++;
-          let tu = { 'device': this.speedData[i].iMEI, 'speed': this.speedData[i].speed };
+          let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
           this.tuplelessthan40.push(tu);
           this.tuppleAll.push(tu);
         }
         else if (this.speedData[i].speed > 40 && this.speedData[i].speed <= 60) {
           this.lessthan60count++;
-          let tu = { 'device': this.speedData[i].iMEI, 'speed': this.speedData[i].speed };
+          let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
           this.tupplelessthan60.push(tu);
           this.tuppleAll.push(tu);
         }
         else if (this.speedData[i].speed > 60 && this.speedData[i].speed <= 90) {
           this.lessthan90count++;
-          let tu = { 'device': this.speedData[i].iMEI, 'speed': this.speedData[i].speed };
+          let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
           this.tupplelessthan90.push(tu);
           this.tuppleAll.push(tu);
         }
         else if (this.speedData[i].speed > 90 && this.speedData[i].speed <= 150) {
           this.lessthan150count++;
-          let tu = { 'device': this.speedData[i].iMEI, 'speed': this.speedData[i].speed };
+          let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
           this.tupplelessthan150.push(tu);
           this.tuppleAll.push(tu);
         }
         else {
           this.morethan150count++;
-          let tu = [{ 'device': this.speedData[i].iMEI, 'speed': this.speedData[i].speed }];
+          let tu = [{ 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed }];
           this.tupplemorethan150.push(tu);
           this.tuppleAll.push(tu);
         }
@@ -184,7 +182,11 @@ export class IconsComponent implements OnInit {
 
       }
 
-    });
+    })
+    //this.dataSource.paginator = this.paginator;
+
+    // this.livedata.getJSON().subscribe(data => {
+    //   );
   }
 
   onClick(x) {
