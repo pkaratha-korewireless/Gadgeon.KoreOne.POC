@@ -32,6 +32,9 @@ import { ApiGetService } from './services/api-get.service';
 import { TableElementComponent } from './table-list/elements/table-element/table-element.component';
 //import { ApiSubscribeService } from './services/api-subscribe.service';
 import { AlertService } from './services/alert.service';
+import * as moment from 'moment';
+import { MomentModule } from 'ngx-moment';
+
 
 
 
@@ -57,7 +60,8 @@ export function highchartsFactory() {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoCHGzZmNSFKhEbDjsughQ4x8BXmNvT4'
     }),
-    GraphQLModule
+    GraphQLModule,
+    MomentModule
   ],
   declarations: [
     AppComponent,

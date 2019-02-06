@@ -47,6 +47,11 @@ namespace PoC.Data.Repository
             IEnumerable<T> result = mapper.Fetch<T>(query);
             return result;
         }
+        private long ConvertToTimestamp(DateTime value)
+        {
+            long epoch = (value.Ticks - 621355968000000000) / 10000000;
+            return epoch;
+        }
 
         private long ConvertToTimestamp(DateTime value)
         {

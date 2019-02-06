@@ -3,7 +3,10 @@ import { Apollo } from 'apollo-angular';
 import { Subscription } from 'apollo-client/util/Observable';
 import gql from 'graphql-tag';
 import { AlertService } from './services/alert.service';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { IMessageData } from './interfaces/message';
+import * as moment from 'moment';
+import { alertNotifierService } from './services/alert-notifier.service';
+import { interval } from 'rxjs';
 
 const subscription = gql`
 subscription alerts{
@@ -31,10 +34,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subSubscription: Subscription;
   private message: any;
+  messageData = { } as IMessageData;
+  
 
-  constructor(private apollo: Apollo, private alertService: AlertService) { }
+  constructor(private apollo: Apollo, private alertService: AlertService,private notifierService:alertNotifierService) {
+
+   }
 
   ngOnInit() {
+    
+    
     this.subSubscription = this.apollo
       .subscribe({
         query: subscription
@@ -43,8 +52,19 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log(result);
         this.message = result.data.new_message;
         this.alertService.device_messages.push(this.message);
-        if (this.message.speed > 50 || this.message.fuel < 3) {
+
+        if (this.message.speed > 150 || this.message.fuel < 10) {
           this.alertService.notifications.push(this.message);
+          this.messageData.text = this.message.imei + ": Limit Exceeded, Speed: "+ this.message.speed + " Fuel: "+this.message.fuel ;
+          this.messageData.date = moment(this.message.actual_date).fromNow();;
+       
+          console.log("Message Data", this.messageData)
+          this.alertService.alerts.push(this.messageData);
+          interval(500).subscribe(a=>
+            {
+              this.notifierService.sendNotificationContent(this.alertService.alerts.length);
+            }
+          );
         }
       });
   }
