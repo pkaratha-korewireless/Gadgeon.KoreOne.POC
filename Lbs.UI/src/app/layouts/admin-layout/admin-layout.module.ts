@@ -11,6 +11,10 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { ChartModule } from 'angular2-highcharts';
+import * as highcharts from 'highcharts';
+import {SafePipe} from '../../pipes/safe.pipe'
+
 
 import {
   MatButtonModule,
@@ -18,7 +22,9 @@ import {
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule
+  MatSelectModule,MatTableModule,
+  MatPaginatorModule
+  
 } from '@angular/material';
 import { TableElementComponent } from 'app/table-list/elements/table-element/table-element.component';
 @NgModule({
@@ -32,6 +38,9 @@ import { TableElementComponent } from 'app/table-list/elements/table-element/tab
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule, 
+    ChartModule
   ],
   declarations: [
     DashboardComponent,
@@ -42,7 +51,8 @@ import { TableElementComponent } from 'app/table-list/elements/table-element/tab
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    TableElementComponent
+    TableElementComponent,
+    SafePipe
   ]
 })
 

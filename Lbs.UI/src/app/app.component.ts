@@ -10,7 +10,7 @@ import { interval } from 'rxjs';
 
 const subscription = gql`
 subscription alerts{
-  limitExceeded{
+  new_message{
     id
     imei
     actual_date
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
       })
       .subscribe(result => {
         console.log(result);
-        this.message = result.data.limitExceeded;
+        this.message = result.data.new_message;
         this.alertService.device_messages.push(this.message);
 
         if (this.message.speed > 150 || this.message.fuel < 10) {
@@ -66,9 +66,6 @@ export class AppComponent implements OnInit, OnDestroy {
             }
           );
         }
-       
-        // tslint:disable-next-line:no-debugger
-        // debugger;
       });
   }
 

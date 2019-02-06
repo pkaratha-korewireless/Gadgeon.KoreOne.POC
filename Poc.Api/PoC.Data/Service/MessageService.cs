@@ -14,15 +14,22 @@ namespace PoC.Data.Service
     public class MessageService : IMessageService
     {
         ICassandraRepository _cassandraRepository;
+        IElasticRepository _elasticRepository;
 
-        public MessageService(ICassandraRepository cassandraRepository)
+        public MessageService(ICassandraRepository cassandraRepository, IElasticRepository elasticRepository)
         {
             _cassandraRepository = cassandraRepository;
+            _elasticRepository = elasticRepository;
             AllEvents = new ConcurrentStack<Message>();
         }
-        public IEnumerable<Message> Get()
+        public IEnumerable<Message> GetCassandraData()
         {
             return _cassandraRepository.Get<Message>();
+        }
+
+        public IEnumerable<Message> GetElasticData()
+        {
+            return _elasticRepository.Get().Result;
         }
 
         public Message AddMessage(Message message)
@@ -52,5 +59,6 @@ namespace PoC.Data.Service
         {
             return _eventStream.AsObservable();
         }
+
     }
 }
