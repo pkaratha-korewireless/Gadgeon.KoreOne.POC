@@ -5,9 +5,7 @@ import { Router } from '@angular/router';
 import { alertNotifierService } from '../../services/alert-notifier.service';
 import { AlertService } from 'app/services/alert.service';
 import * as moment from 'moment';
-
-// let now = moment().format('LLLL');
-//let now = moment().fromNow();
+import { Subscription, interval } from 'rxjs';
 
 @Component({
     selector: 'app-navbar',
@@ -21,11 +19,12 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    //date: any = now;
-    messageLen: Number;
-
     @Output() notifications: Array<any> = [];
     @Output() messages: any[] = [];
+
+    @Output() testData:any;
+
+    subscription: Subscription;
 
     constructor(location: Location, private element: ElementRef, private router: Router, private notifierService: alertNotifierService,
         private alertService: AlertService) {
@@ -46,10 +45,15 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
         });
-
+   
         this.messages = this.alertService.alerts;
-        //debugger;
-        console.log(this.messages);
+    
+        interval(1000).subscribe(a => {
+            this.notifierService.sendMessage$.subscribe(message => { this.testData = message; });
+            this.mouseClickRefresh = false;
+       
+        console.log("Test Data"+ this.testData);
+        });
     }
 
     sidebarOpen() {
@@ -140,5 +144,13 @@ export class NavbarComponent implements OnInit {
             }
         }
         return 'Dashboard';
+    }
+    // getMessageLength(){
+    //     return this.messages.length;
+    // }
+    mouseClickRefresh: boolean;
+    messageCountRefresh(){
+        debugger;
+        this.mouseClickRefresh = true;
     }
 }

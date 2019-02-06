@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
 import { GoogleAPIService } from '../services/google-map.services'
-import { alertNotifierService } from '../services/alert-notifier.service'
+// import { alertNotifierService } from '../services/alert-notifier.service'
 import { ICoord, IVehicle } from '../interfaces/location';
 import { interval } from 'rxjs'
 // import { ToastrService } from 'ngx-toastr';
@@ -15,8 +15,8 @@ declare const google: any;
 export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
 
-    constructor(private googleAPIService: GoogleAPIService,
-        private notifierService: alertNotifierService) {
+    constructor(private googleAPIService: GoogleAPIService
+        ) {
 
     }
     ngOnInit() {
@@ -29,10 +29,10 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
         console.log('Called Destroy');
     }
 
-    public showErrorNotification(message: string, iMEI: Number): void {
-        message = "Vehicle " + iMEI + ": " + message;
-        this.notifierService.sendNotificationContent(message);
-    }
+    // public showErrorNotification(message: string, iMEI: Number): void {
+    //     message = "Vehicle " + iMEI + ": " + message;
+    //     this.notifierService.sendNotificationContent(message);
+    // }
     // public showWarningNotification(message: string, iMEI: Number ): void {
     //     message = "Vehicle "+iMEI+": " + message;
     //     debugger;
@@ -42,29 +42,29 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     //       });
     // }
 
-    CheckSpeedLimit(vehicle: IVehicle) {
-        var flag = false;
-        if (vehicle.speed > this.maxSpeed) {
-            console.log("Speed Crossed Limits")
-            flag = true;
-            this.showErrorNotification('Speed Crossed Limits', vehicle.iMEI)
-        }
-        else
-            flag = false;
-        return flag;
-    }
+    // CheckSpeedLimit(vehicle: IVehicle) {
+    //     var flag = false;
+    //     if (vehicle.speed > this.maxSpeed) {
+    //         console.log("Speed Crossed Limits")
+    //         flag = true;
+    //         this.showErrorNotification('Speed Crossed Limits', vehicle.iMEI)
+    //     }
+    //     else
+    //         flag = false;
+    //     return flag;
+    // }
 
-    CheckFuelLevel(vehicle: IVehicle) {
-        var flag = false;
-        if (vehicle.fuel < this.minFuelLevel) {
-            console.log("Fuel Level Low")
-            flag = true;
-            this.showErrorNotification('Fuel Level Extremely Low', vehicle.iMEI)
-        }
-        else
-            flag = false;
-        return flag;
-    }
+    // CheckFuelLevel(vehicle: IVehicle) {
+    //     var flag = false;
+    //     if (vehicle.fuel < this.minFuelLevel) {
+    //         console.log("Fuel Level Low")
+    //         flag = true;
+    //         this.showErrorNotification('Fuel Level Extremely Low', vehicle.iMEI)
+    //     }
+    //     else
+    //         flag = false;
+    //     return flag;
+    // }
 
     getDirection() {
         this.origin = { lat: 10.011848, lng: 76.366421 }
@@ -201,8 +201,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                                         myLatlng = new google.maps.LatLng(this.vehicles[i].location[this.vehicles[i].location.length - 1].lat, this.vehicles[i].location[this.vehicles[i].location.length - 1].lng);
                                         marker[i].setPosition(myLatlng)
 
-                                        var isSpeedError = this.CheckSpeedLimit(this.vehicles[i]);
-                                        var isFuelError = this.CheckFuelLevel(this.vehicles[i]);
+                                       // var isFuelError = this.CheckFuelLevel(this.vehicles[i]);
                                         // if (isError) {
                                         //     marker[i].icon = this.marker_icon_url_error;
                                         //     marker[i].setPosition(myLatlng)

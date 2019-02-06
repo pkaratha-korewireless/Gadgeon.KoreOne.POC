@@ -6,21 +6,19 @@ import { Observable, Subject } from 'rxjs';
 })
 export class alertNotifierService {
 
-    private subject = new Subject<any>();
+    private getsubject = new Subject<any>();
+    private sendsubject = new Subject<any>();
 
-    constructor() { }
+    constructor() { }   
+    sendMessage$=this.sendsubject.asObservable();
 
-    getNotificationContent(): Observable<any> {
-        return this.subject.asObservable();
-    }
-
-    sendNotificationContent(message: string) {
-        this.subject.next({ text: message });
-    }
-
-    clearNotificationContent() {
-        this.subject.next();
-    }
+    getNotificationContent(msg: any) {
+        this.sendsubject.next(msg);
+      }
+    sendNotificationContent(msg: any) {
+        this.sendsubject.next(msg);
+      }
+    
 
 
 }
