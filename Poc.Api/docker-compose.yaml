@@ -1,0 +1,6 @@
+version: "3"
+services:
+    web:
+        image: api-poc
+        ports:
+            - 8000:80
