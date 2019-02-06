@@ -29,7 +29,7 @@ You can find the Github Repo here.
 Quick start options:
 
 - [Download from Github](https://github.com/tiniestory/material-dashboard-angular2/archive/master.zip).
-- [Download from Creative Tim](http://www.creative-tim.com/product/material-dashboard-angular2).
+- [Download from Kore](http://www.creative-tim.com/product/material-dashboard-angular2).
 
 ## Terminal Commands
 
@@ -158,7 +158,7 @@ material-dashboard-angular
 
 ## Useful Links
 
-More products from Creative Tim: <http://www.creative-tim.com/bootstrap-themes>
+More products from Kore: <http://www.creative-tim.com/bootstrap-themes>
 
 Tutorials: <https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w>
 
