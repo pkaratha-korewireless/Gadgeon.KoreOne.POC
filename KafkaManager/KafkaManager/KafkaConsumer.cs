@@ -38,7 +38,7 @@ namespace KafkaManager
             {
                 Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
 
-                var res = CallSignalRAPI(msg.Value);
+               var res = CallSignalRAPI(msg.Value);
                 consumer.CommitAsync(msg);
             };
             consumer.OnError += (_, error) =>

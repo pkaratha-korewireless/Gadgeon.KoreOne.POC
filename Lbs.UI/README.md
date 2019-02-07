@@ -91,10 +91,10 @@ material-dashboard-angular
 │   │   │   ├── dashboard.component.spec.ts
 │   │   │   └── dashboard.component.ts
 │   │   ├── icons
-│   │   │   ├── icons.component.css
-│   │   │   ├── icons.component.html
-│   │   │   ├── icons.component.spec.ts
-│   │   │   └── icons.component.ts
+│   │   │   ├── speedanalysis.component.css
+│   │   │   ├── speedanalysis.component.html
+│   │   │   ├── speedanalysis.componet.spec.ts
+│   │   │   └── speedanalysis.componet.ts
 │   │   ├── layouts
 │   │   │   └── admin-layout
 │   │   │       ├── admin-layout.component.html
@@ -118,11 +118,11 @@ material-dashboard-angular
 │   │   │   ├── table-list.component.html
 │   │   │   ├── table-list.component.spec.ts
 │   │   │   └── table-list.component.ts
-│   │   ├── typography
-│   │   │   ├── typography.component.css
-│   │   │   ├── typography.component.html
-│   │   │   ├── typography.component.spec.ts
-│   │   │   └── typography.component.ts
+│   │   ├── kibanadashboard
+│   │   │   ├── kibanadashboard.component.css
+│   │   │   ├── kibanadashboard.component.html
+│   │   │   ├── kibanadashboard.component.spec.ts
+│   │   │   └── kibanadashboard.component.ts
 │   │   ├── upgrade
 │   │   │   ├── upgrade.component.css
 │   │   │   ├── upgrade.component.html

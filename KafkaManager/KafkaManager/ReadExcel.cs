@@ -31,7 +31,7 @@ namespace KafkaManager
                         var message = new Message();
                         for (int row = 2; row <= rowCount; row++)
                         {
-                            message.IMEI = $"1234{row}";
+                            message.IMEI = $"1234{i}";
                             message.Odotemer = 5 + row % 20;
                             message.Voltage = 50 + row % 20;
                             message.Speed = 48 + row % 20;

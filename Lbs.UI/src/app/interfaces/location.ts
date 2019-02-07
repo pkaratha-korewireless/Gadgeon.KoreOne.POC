@@ -1,3 +1,5 @@
+import { interceptingHandler } from "@angular/common/http/src/module";
+
 export interface IVehicle
 {
     iMEI: Number,
@@ -15,4 +17,9 @@ export interface ISpeed{
     device:any;
     speed:number;
 
+}
+
+export interface IMarkerMap{
+    device:string;
+    marker: any;
 }

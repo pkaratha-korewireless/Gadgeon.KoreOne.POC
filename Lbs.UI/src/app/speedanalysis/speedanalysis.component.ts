@@ -30,12 +30,12 @@ import { Jsonp } from '@angular/http';
 Exporting(Highcharts);
 @Component({
   selector: 'speed-analysis',
-  templateUrl: './icons.component.html',
-  styleUrls: ['./icons.component.css']
+  templateUrl: './speedanalysis.component.html',
+  styleUrls: ['./speedanalysis.component.css']
 })
 
 
-export class IconsComponent implements OnInit {
+export class SpeedanalysisComponet implements OnInit {
 
 
   allMessages: any;
