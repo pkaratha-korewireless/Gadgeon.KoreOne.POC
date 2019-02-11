@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'kibana-dashboard',
-  templateUrl: './typography.component.html',
-  styleUrls: ['./typography.component.css']
+  templateUrl: './kibanadashboard.component.html',
+  styleUrls: ['./kibanadashboard.component.css']
 })
-export class TypographyComponent implements OnInit {
+export class KibanadashboardComponent implements OnInit {
 
   constructor() { }
 

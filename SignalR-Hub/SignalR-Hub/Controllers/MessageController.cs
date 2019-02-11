@@ -27,7 +27,7 @@ namespace SignalRHub.Controllers
         }
 
         [HttpPost]
-        public string Post([FromBody]Message msg)
+        public string Post([FromBody]String msg)
         {
             string retMessage = string.Empty;
             try

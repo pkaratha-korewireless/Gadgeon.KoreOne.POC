@@ -11,10 +11,9 @@ export const ROUTES: RouteInfo[] = [
   //  { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
   { path: '/maps', title: 'Tracking',  icon:'location_on', class: '' },
   //  { path: '/user-profile', title: 'User Profile',  icon:'person', class: '' },
-    { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
+    { path: '/table-list', title: 'Hardware Messages',  icon:'content_paste', class: '' },
     { path: '/kibana-dashboard', title: 'Kibana Dashboard',  icon:'dashboard', class: '' },
     { path: '/speed-analysis', title: 'Speed Analysis',  icon:'bubble_chart', class: '' },
-  
     { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
     //{ path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
 ];

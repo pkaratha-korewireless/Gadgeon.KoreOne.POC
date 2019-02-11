@@ -25,16 +25,17 @@ import Drilldown from 'highcharts/modules/drilldown';
 Drilldown(Highcharts);
 import Exporting from 'highcharts/modules/exporting';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+import { Jsonp } from '@angular/http';
 
 Exporting(Highcharts);
 @Component({
   selector: 'speed-analysis',
-  templateUrl: './icons.component.html',
-  styleUrls: ['./icons.component.css']
+  templateUrl: './speedanalysis.component.html',
+  styleUrls: ['./speedanalysis.component.css']
 })
 
 
-export class IconsComponent implements OnInit {
+export class SpeedanalysisComponet implements OnInit {
 
 
   allMessages: any;
@@ -87,39 +88,41 @@ export class IconsComponent implements OnInit {
         
         this.speedData.push(data);
         for (var i = 0; i < this.speedData.length; i++) {
-          if (this.speedData[i].speed <= 20) {
+          //console.log(this.speedData[i]["Speed"],this.speedData[i]['Speed'],JSON.parse(this.speedData[i])["Speed"])
+          let parsedData = JSON.parse(this.speedData[i]);
+          if (parsedData["Speed"] <= 20) {
             this.lessthan20count++;
-            let tu = [{ 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed }];
+            let tu = [{ 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] }];
             this.tuplelessthan20.push(tu);
             this.tuppleAll.push(tu);
           }
-          else if (this.speedData[i].speed > 20 && this.speedData[i].speed <= 40) {
+          else if (parsedData["Speed"] > 20 && parsedData["Speed"] <= 40) {
             this.lessthan40count++;
-            let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
+            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
             this.tuplelessthan40.push(tu);
             this.tuppleAll.push(tu);
           }
-          else if (this.speedData[i].speed > 40 && this.speedData[i].speed <= 60) {
+          else if (parsedData["Speed"] > 40 && parsedData["Speed"] <= 60) {
             this.lessthan60count++;
-            let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
+            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
             this.tupplelessthan60.push(tu);
             this.tuppleAll.push(tu);
           }
-          else if (this.speedData[i].speed > 60 && this.speedData[i].speed <= 90) {
+          else if (parsedData["Speed"] > 60 && parsedData["Speed"] <= 90) {
             this.lessthan90count++;
-            let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
+            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
             this.tupplelessthan90.push(tu);
             this.tuppleAll.push(tu);
           }
-          else if (this.speedData[i].speed > 90 && this.speedData[i].speed <= 150) {
+          else if (parsedData["Speed"] > 90 && parsedData["Speed"] <= 150) {
             this.lessthan150count++;
-            let tu = { 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed };
+            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
             this.tupplelessthan150.push(tu);
             this.tuppleAll.push(tu);
           }
           else {
             this.morethan150count++;
-            let tu = [{ 'device': this.speedData[i].imei, 'speed': this.speedData[i].speed }];
+            let tu = [{ 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] }];
             this.tupplemorethan150.push(tu);
             this.tuppleAll.push(tu);
           }

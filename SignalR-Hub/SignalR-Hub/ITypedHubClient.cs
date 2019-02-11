@@ -7,6 +7,6 @@ namespace SignalRHub
 {
     public interface ITypedHubClient
     {
-        Task BroadcastMessage(Message message);
+        Task BroadcastMessage(string message);
     }
 }
