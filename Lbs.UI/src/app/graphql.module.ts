@@ -6,9 +6,10 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { LinkError } from 'apollo-link/lib/linkUtils';
 import { getMainDefinition } from 'apollo-utilities';
 import { split } from 'apollo-link';
+import { AppConfig } from '../app/config/app.config';
 
-const luri = 'https://localhost:44337/graphql'; // <-- add the URL of the GraphQL server here
-const wsuri = 'wss://localhost:44337/graphql';
+const luri = AppConfig.luri; // <-- add the URL of the GraphQL server here
+const wsuri = AppConfig.wsuri;
 const wsLink = new WebSocketLink({
   uri: wsuri,
   options: {

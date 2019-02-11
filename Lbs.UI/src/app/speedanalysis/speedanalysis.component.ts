@@ -26,6 +26,7 @@ Drilldown(Highcharts);
 import Exporting from 'highcharts/modules/exporting';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { Jsonp } from '@angular/http';
+import { AppConfig } from 'app/config/app.config';
 
 Exporting(Highcharts);
 @Component({
@@ -78,7 +79,7 @@ export class SpeedanalysisComponet implements OnInit {
 
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:44380/notify')
+      .withUrl(AppConfig.socket_url)
       .configureLogging(signalR.LogLevel.Information)
       .build();
     this.hubConnection.start()
