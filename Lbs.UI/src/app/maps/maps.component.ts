@@ -91,7 +91,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     getSocketData() {
         console.log("MAP:SocketData Init");
         this.hubConnection = new HubConnectionBuilder()
-            .withUrl(AppConfig.socket_url)
+            .withUrl('https://localhost:44380/message')
             .configureLogging(LogLevel.Information)
             .build();
         this.hubConnection.start()
@@ -114,9 +114,6 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                 console.log("IMEI::::::",element.device )
                 if(element.device == imei){
                     element.marker.setPosition(new google.maps.LatLng(latlon.lng, latlon.lat))
-                    element.marker.addListener('click', function () {
-                        element.infowindow.open(this.map, element.marker);
-                    });
                 }
             });
         }

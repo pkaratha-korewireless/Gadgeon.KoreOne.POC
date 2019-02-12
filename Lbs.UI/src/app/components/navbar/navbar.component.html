@@ -24,29 +24,29 @@
                     <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                     (click)="messageCountRefresh()"> 
                         <i class="material-icons">notifications</i>
-                        <span class="notification" *ngIf="(notifications.length > 0) && (!mouseClickRefresh)">{{ notifications.length }}</span>
+                        <span class="notification" *ngIf="(messages.length > 0) && (!mouseClickRefresh)">{{ messages.length }}</span>
                         <p>
                             <span class="d-lg-none d-md-block">Some Actions</span>
                         </p>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" *ngIf="!notifications.length > 0">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" *ngIf="!messages.length > 0">
                         <li class="dropdown-item"><a routerLink="/notifications">No notifications right now !! </a></li>
                     </div>
 
-                    <div class="dropdown-menu dropdown-menu-right scrollable-menu" aria-labelledby="navbarDropdownMenuLink" *ngIf="notifications.length > 0">
-                        <li class="dropdown-item" *ngFor="let message of notifications.reverse()"><a routerLink="/notifications">{{ message.imei }} : {{ message.message }}  <br> {{message.actual_date | titlecase }}</a></li>
+                    <div class="dropdown-menu dropdown-menu-right scrollable-menu" aria-labelledby="navbarDropdownMenuLink" *ngIf="messages.length > 0">
+                        <li class="dropdown-item" *ngFor="let message of messages.reverse()"><a routerLink="/notifications">{{ message.imei }} : {{ message.message }}  <br> {{message.actual_date | titlecase }}</a></li>
                     </div>
 
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                         <i class="material-icons">person</i>
                         <p>
                             <span class="d-lg-none d-md-block">Account</span>
                         </p>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

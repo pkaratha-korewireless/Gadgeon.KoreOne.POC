@@ -39,14 +39,15 @@ export class alertNotifierService {
 
     constructor() { }
 
-    getNotificationContent(): Observable<any> {
-        this.subscribeToMessages();
-        console.log("message subscribed in navbar")
-        return this.subject.asObservable();
-    }
+    // getNotificationContent(): Observable<any> {
+    //     this.subscribeToMessages();
+    //     console.log("message subscribed in navbar")
+    //     return this.subject.asObservable();
+    // }
 
-    subscribeToMessages() {
+    subscribeToMessages():  INotifications[] {
       this.getSocketData();
+      return this.notifications
     }
 
     
@@ -55,7 +56,7 @@ export class alertNotifierService {
   getSocketData() {
       console.log("MAP:SocketData Init");
       this.hubConnection = new HubConnectionBuilder()
-          .withUrl('https://localhost:44380/notify')
+          .withUrl('https://localhost:44380/message')
           .configureLogging(LogLevel.Information)
           .build();
       this.hubConnection.start()
