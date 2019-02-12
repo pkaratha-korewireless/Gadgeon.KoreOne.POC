@@ -11,11 +11,11 @@ namespace SignalRHub.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MessageController : ControllerBase
+    public class SpeedAnalysisController : ControllerBase
     {
-        private IHubContext<MessageHub, ITypedHubClient> _hubContext;
+        private IHubContext<SpeedAnalysisHub, ITypedHubClient> _hubContext;
 
-        public MessageController(IHubContext<MessageHub, ITypedHubClient> hubContext)
+        public SpeedAnalysisController(IHubContext<SpeedAnalysisHub, ITypedHubClient> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -23,11 +23,11 @@ namespace SignalRHub.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "speedanalysis" };
         }
 
         [HttpPost]
-        public string Post([FromBody]String msg)
+        public string Post([FromBody]string msg)
         {
             string retMessage = string.Empty;
             try

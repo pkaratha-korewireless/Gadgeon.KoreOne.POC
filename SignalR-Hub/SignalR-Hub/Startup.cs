@@ -55,7 +55,8 @@ namespace SignalRHub
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<NotifyHub>("/notify");
+                routes.MapHub<MessageHub>("/message");
+                routes.MapHub<SpeedAnalysisHub>("/speedanalysis");
             });
 
             app.UseMvc();
