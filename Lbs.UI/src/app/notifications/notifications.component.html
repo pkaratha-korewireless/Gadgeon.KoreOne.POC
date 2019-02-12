@@ -23,6 +23,9 @@
                             <th>
                                 Fuel
                             </th>
+                            <th>
+                                Message
+                            </th>
                         </thead>
                         <tbody>
                             <tr class="col-md-12" *ngFor="let a of notifications.slice().reverse()">
@@ -37,6 +40,9 @@
                                 </td>
                                 <td>
                                     {{a.fuel}}
+                                </td>
+                                <td>
+                                    {{a.message}}
                                 </td>
                             </tr>
                         </tbody>

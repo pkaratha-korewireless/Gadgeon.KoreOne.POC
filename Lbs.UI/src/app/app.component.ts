@@ -56,15 +56,15 @@ export class AppComponent implements OnInit, OnDestroy {
         if (this.message.speed > 150 || this.message.fuel < 10) {
           this.alertService.notifications.push(this.message);
           this.messageData.text = this.message.imei + ": Limit Exceeded, Speed: "+ this.message.speed + " Fuel: "+this.message.fuel ;
-          this.messageData.date = moment(this.message.actual_date).fromNow();;
+          this.messageData.date = moment(this.message.actual_date).fromNow();
        
           console.log("Message Data", this.messageData)
           this.alertService.alerts.push(this.messageData);
-          interval(500).subscribe(a=>
-            {
-              this.notifierService.sendNotificationContent(this.alertService.alerts.length);
-            }
-          );
+          // interval(500).subscribe(a=>
+          //   {
+          //     this.notifierService.sendNotificationContent(this.alertService.alerts.length);
+          //   }
+          // );
         }
       });
   }

@@ -22,4 +22,5 @@ export interface ISpeed{
 export interface IMarkerMap{
     device:string;
     marker: any;
+    infowindow: any;
 }

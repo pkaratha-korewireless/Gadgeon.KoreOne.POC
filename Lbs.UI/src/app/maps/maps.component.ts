@@ -38,7 +38,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     lat_init: Number = 10.0118;
     lng_init: Number = 76.3664;
 
-    zoom: Number = 14;
+    zoom: Number = 12;
 
     marker_icon_url_normal: string = "./assets/img/car_icon_normal.png"
     marker_icon_url_error: string = "./assets/img/car_icon_red.png"
@@ -70,13 +70,13 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                     };
                     try {
                         this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-                        let markerElement = new google.maps.Marker({
-                            position: myLatlng,
-                            map: this.map,
-                            icon: this.marker_icon_url_normal
-                        })
-                        console.log("dummy marker : ",markerElement)
-                        markerElement.setMap(this.map);
+                        // let markerElement = new google.maps.Marker({
+                        //     position: myLatlng,
+                        //     map: this.map,
+                        //     icon: this.marker_icon_url_normal
+                        // })
+                        // console.log("dummy marker : ",markerElement)
+                        // markerElement.setMap(this.map);
                     }
                     catch (E) {
                         this.map = null;
@@ -114,6 +114,9 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                 console.log("IMEI::::::",element.device )
                 if(element.device == imei){
                     element.marker.setPosition(new google.maps.LatLng(latlon.lng, latlon.lat))
+                    element.marker.addListener('click', function () {
+                        element.infowindow.open(this.map, element.marker);
+                    });
                 }
             });
         }
@@ -124,9 +127,17 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                 icon: this.marker_icon_url_normal,
                 title : latlon.lat + '' + latlon.lng 
             })
-            let mappedMarker : IMarkerMap = {device:imei, marker:markerElement};
+            let infowindow = new google.maps.InfoWindow({
+                content: '<div id="content">' +
+                    '<b>Vehicle:' + imei + '</b>' +
+                    '</div>'
+            })
+            let mappedMarker : IMarkerMap = {device:imei, marker:markerElement, infowindow: infowindow };
             this.markerList.push(mappedMarker);
             markerElement.setMap(this.map);
+            markerElement.addListener('click', function () {
+                infowindow.open(this.map, markerElement);
+            });
             console.log("Marker Details:", this.markerList, latlon)
             this.imeiList.push(imei);
         }

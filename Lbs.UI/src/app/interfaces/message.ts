@@ -21,3 +21,11 @@ export interface IMessageData {
     date: string
     text: string
 }
+
+export interface INotifications {
+    actual_date: any
+    imei: any
+    speed: any
+    fuel: any
+    message: any
+}
