@@ -2,33 +2,15 @@ import { Component, OnInit,ViewChild} from '@angular/core';
 import gql from 'graphql-tag';
 import { Subscription } from 'apollo-client/util/Observable';
 import * as signalR from "@aspnet/signalr";
-const getQuery = gql`
-query allMessages {
-  get_elastic_data {
-    id
-    imei
-    actual_date
-    latitude
-    longitude
-    direction
-    odometer
-    speed
-    temperature
-    fuel
-    voltage
-  }
-}
-`;
-
 import * as Highcharts from 'highcharts';
 import Drilldown from 'highcharts/modules/drilldown';
 Drilldown(Highcharts);
 import Exporting from 'highcharts/modules/exporting';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import { Jsonp } from '@angular/http';
 import { AppConfig } from 'app/config/app.config';
-
 Exporting(Highcharts);
+
+
 @Component({
   selector: 'speed-analysis',
   templateUrl: './speedanalysis.component.html',
@@ -38,11 +20,9 @@ Exporting(Highcharts);
 
 export class SpeedanalysisComponet implements OnInit {
 
-
   allMessages: any;
   error: any;
   loading: boolean;
-  private querySubscription: Subscription;
   public chart: any;
   speed: Number[] = [];
   options: Object;
@@ -62,9 +42,7 @@ export class SpeedanalysisComponet implements OnInit {
   morethan150count: number = 0;
   tupplemorethan150: any[] = [];
   tuppleAll: any[] = [];
-
-  displayedColumns: string[] = ['device', 'speed'];
- 
+  displayedColumns: string[] = ['device', 'speed']; 
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   private hubConnection: signalR.HubConnection
@@ -79,13 +57,13 @@ export class SpeedanalysisComponet implements OnInit {
 
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(AppConfig.socket_url)
+      .withUrl(AppConfig.socket_url_speedanalysis)
       .configureLogging(signalR.LogLevel.Information)
       .build();
     this.hubConnection.start()
       .then(() => console.log('Connection started!'))
-      .catch(err => console.error('Error while establishing connection :('));
-      this.hubConnection.on('BroadcastMessage', (data: any) => {
+      .catch(err => console.error('Error while establishing connection :('));     
+      this.hubConnection.on('BroadcastMessage', (data: any) => {       
         
         this.speedData.push(data);
         for (var i = 0; i < this.speedData.length; i++) {
@@ -133,10 +111,6 @@ export class SpeedanalysisComponet implements OnInit {
         this.jsonobject = [{ 'name': 'lessthan20', 'y': this.lessthan20count }, { 'name': 'lessthan40', 'y': this.lessthan40count }, { 'name': 'lessthan40', 'y': this.lessthan40count },
         { 'name': 'lessthan60', 'y': this.lessthan60count }, { 'name': 'lessthan90', 'y': this.lessthan90count }, { 'name': 'lessthan150', 'y': this.lessthan150count }, { 'name': 'morethan150', 'y': this.morethan150count }];
   
-        // this.tupplejson=[{'name':'Speed',id:'lessthan20','data':this.tuplelessthan20},
-        // {'name':'Speed',id:'lessthan40','data':this.tuplelessthan40},
-        // {'name':'Speed',id:'morethan40','data':this.tupplemorethan40}];
-        // console.log(this.tuplelessthan40);
         var that = this;
         this.options = {
   
@@ -182,24 +156,6 @@ export class SpeedanalysisComponet implements OnInit {
         }
   
     });
-
-    // this.querySubscription = this.apollo.watchQuery<any>({
-    //   query: getQuery
-    // }).valueChanges.subscribe(result => {
-    //   debugger;
-     
-    //   this.error = result.errors;
-    //   this.loading = result.loading;
-    //  // this.allMessages = result.data || result.data.get_cassandra_data;
-      
-    //   this.speedData =  result.data && result.data.get_elastic_data;
-    
-     
-    // })
-    //this.dataSource.paginator = this.paginator;
-
-    // this.livedata.getJSON().subscribe(data => {
-    //   );
   }
 
   onClick(x) {
