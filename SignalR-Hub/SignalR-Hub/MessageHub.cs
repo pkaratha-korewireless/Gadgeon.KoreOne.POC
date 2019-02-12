@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SignalRHub
 {
-    public interface ITypedHubClient
+    public class MessageHub : Hub<ITypedHubClient>
     {
-        Task BroadcastMessage(string message);
+
     }
 }

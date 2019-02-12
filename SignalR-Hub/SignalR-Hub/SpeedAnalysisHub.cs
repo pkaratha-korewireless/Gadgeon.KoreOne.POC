@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SignalRHub
 {
-    public class NotifyHub : Hub<ITypedHubClient>
+    public class SpeedAnalysisHub : Hub<ITypedHubClient>
     {
-
     }
 }

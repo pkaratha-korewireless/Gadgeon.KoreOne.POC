@@ -12538,11 +12538,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Dev\\SignalR-Hub\\SignalR-Hub\\SignalR-Hub.csproj",
+      "projectUniqueName": "E:\\Dev\\Gadgeon.KoreOne.POC\\SignalR-Hub\\SignalR-Hub\\SignalR-Hub.csproj",
       "projectName": "SignalRHub",
-      "projectPath": "E:\\Dev\\SignalR-Hub\\SignalR-Hub\\SignalR-Hub.csproj",
+      "projectPath": "E:\\Dev\\Gadgeon.KoreOne.POC\\SignalR-Hub\\SignalR-Hub\\SignalR-Hub.csproj",
       "packagesPath": "C:\\Users\\mnoormuhammed\\.nuget\\packages\\",
-      "outputPath": "E:\\Dev\\SignalR-Hub\\SignalR-Hub\\obj\\",
+      "outputPath": "E:\\Dev\\Gadgeon.KoreOne.POC\\SignalR-Hub\\SignalR-Hub\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
