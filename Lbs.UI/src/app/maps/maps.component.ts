@@ -91,7 +91,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     getSocketData() {
         console.log("MAP:SocketData Init");
         this.hubConnection = new HubConnectionBuilder()
-            .withUrl(AppConfig.socket_url)
+            .withUrl(AppConfig.socket_url_notify)
             .configureLogging(LogLevel.Information)
             .build();
         this.hubConnection.start()
