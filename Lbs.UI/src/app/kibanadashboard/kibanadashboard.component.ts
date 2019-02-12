@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConfig } from '../config/app.config';
+
 
 @Component({
   selector: 'kibana-dashboard',
@@ -6,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./kibanadashboard.component.css']
 })
 export class KibanadashboardComponent implements OnInit {
+  
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  yt='<iframe src="http://localhost:5601/app/kibana#/dashboard/dc0bad90-1f48-11e9-9fe7-41044522f366?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-5y%2Cmode%3Aquick%2Cto%3Anow))" height="500" width="1000"></iframe>';
-
-}
+  
+  kibana_dashboard='<iframe src='+AppConfig.kibana_url+' height="600" width="1000"></iframe>';
+ // kibana_dashboard='<iframe src="http://192.168.65.178:5601/app/kibana#/dashboard/da7fd4e0-2dd7-11e9-a509-df90251aacd3?embed=true&_g=(refreshInterval%3A(pause%3A!f%2Cvalue%3A5000)%2Ctime%3A(from%3Anow-30m%2Cmode%3Arelative%2Cto%3Anow-13s))" height="600" width="1000"></iframe>'
+  }

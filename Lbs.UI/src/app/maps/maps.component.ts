@@ -4,6 +4,7 @@ import { GoogleAPIService } from '../services/google-map.services'
 import { ICoord, IVehicle, IMarkerMap } from '../interfaces/location';
 import { interval } from 'rxjs'
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import { AppConfig } from 'app/config/app.config';
 // import { ToastrService } from 'ngx-toastr';
 
 
@@ -17,6 +18,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
 
     constructor(private googleAPIService: GoogleAPIService) { }
+ 
     markerList: any[] = [];
     infowindow: any[] = [];
     imeiList = [];
@@ -89,7 +91,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     getSocketData() {
         console.log("MAP:SocketData Init");
         this.hubConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44380/notify')
+            .withUrl(AppConfig.socket_url)
             .configureLogging(LogLevel.Information)
             .build();
         this.hubConnection.start()
