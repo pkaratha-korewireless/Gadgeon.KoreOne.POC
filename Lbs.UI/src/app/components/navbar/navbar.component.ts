@@ -6,6 +6,8 @@ import { alertNotifierService } from '../../services/alert-notifier.service';
 import { AlertService } from 'app/services/alert.service';
 import * as moment from 'moment';
 import { Subscription, interval } from 'rxjs';
+import { INotifications } from 'app/interfaces/message';
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
 @Component({
     selector: 'app-navbar',
@@ -19,10 +21,12 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    @Output() notifications: Array<any> = [];
-    @Output() messages: any[] = [];
+    // @Output() notifications: Array<any> = [];
+    // @Output() messages: any[] = [];
 
-    @Output() testData:any;
+    // @Output() testData:any;
+
+    notifications: INotifications[] = [];
 
     subscription: Subscription;
 
@@ -46,16 +50,68 @@ export class NavbarComponent implements OnInit {
             }
         });
    
-        this.messages = this.alertService.alerts;
+        //this.messages = this.alertService.alerts;
     
-        interval(1000).subscribe(a => {
-            this.notifierService.sendMessage$.subscribe(message => { this.testData = message; });
-            this.mouseClickRefresh = false;
+        // interval(1000).subscribe(a => {
+        //     this.notifierService.sendMessage$.subscribe(message => { this.testData = message; });
+        //     this.mouseClickRefresh = false;
        
-        console.log("Test Data"+ this.testData);
+        // console.log("Test Data"+ this.testData);
+        // });
+        // debugger;
+        // this.notifierService.getNotificationContent().subscribe(message =>
+        //     {
+        //         debugger;
+        //         console.log(message)
+        //         this.messages.push(message);
+        //     });
+
+        this.getSocketData();
+
+    }
+    hubConnection: any;
+    socketData = [];
+    getSocketData() {
+        console.log("MAP:SocketData Init");
+        this.hubConnection = new HubConnectionBuilder()
+            .withUrl('https://localhost:44380/notify')
+            .configureLogging(LogLevel.Information)
+            .build();
+        this.hubConnection.start()
+            .then(() => console.log('Connection started!'))
+            .catch(err => console.error('Error while establishing connection :('));
+        this.hubConnection.on('BroadcastMessage', (data: any) => {
+            this.socketData = JSON.parse(data);
+            console.log("MAP:SocketData:", data);
+            var notification = {
+              'imei': this.socketData["IMEI"],
+              'speed': this.socketData["Speed"],
+              'fuel': this.socketData["Fuel"],
+              'actual_date': moment(this.socketData["ActualDate"]).fromNow(),
+              'message': ""
+            }
+            if (notification.speed > 150 && notification.fuel < 10 ) {
+              notification.message = "Speed Crossed Limits and Low Fuel Level !!";
+              this.notifications.push(notification);
+              this.mouseClickRefresh = false;
+            }
+            else if (notification.fuel < 10 ){
+              notification.message = "Low Fuel Level !!";
+              this.notifications.push(notification);
+              this.mouseClickRefresh = false;
+            }
+            else if(notification.speed > 150){
+              notification.message = "Speed Crossed Limits !!";
+              this.notifications.push(notification);
+              this.mouseClickRefresh = false;
+            }
+            else
+              console.log("within range")
+              console.log("notifications array: ", this.notifications)
         });
     }
 
+    
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
@@ -150,7 +206,7 @@ export class NavbarComponent implements OnInit {
     // }
     mouseClickRefresh: boolean;
     messageCountRefresh(){
-        debugger;
+       // debugger;
         this.mouseClickRefresh = true;
     }
 }
