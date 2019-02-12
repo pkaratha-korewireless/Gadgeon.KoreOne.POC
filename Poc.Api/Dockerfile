@@ -1,6 +1,6 @@
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 80/tcp
 EXPOSE 443
 
 FROM microsoft/dotnet:2.1-sdk AS build
@@ -18,5 +18,5 @@ RUN dotnet publish "PoC.Api.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENV ASPNETCORE_URLS http://192.168.65.187:5000
+ENV ASPNETCORE_URLS http://*:5000
 ENTRYPOINT ["dotnet", "PoC.Api.dll"]
