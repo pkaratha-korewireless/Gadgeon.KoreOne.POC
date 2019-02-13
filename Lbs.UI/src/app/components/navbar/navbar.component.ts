@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
     // @Output() testData:any;
 
-    notifications: INotifications[] = [];
+    messages: INotifications[] = [];
 
     subscription: Subscription;
 
@@ -92,22 +92,22 @@ export class NavbarComponent implements OnInit {
             }
             if (notification.speed > 150 && notification.fuel < 10 ) {
               notification.message = "Speed Crossed Limits and Low Fuel Level !!";
-              this.notifications.push(notification);
+              this.messages.push(notification);
               this.mouseClickRefresh = false;
             }
             else if (notification.fuel < 10 ){
               notification.message = "Low Fuel Level !!";
-              this.notifications.push(notification);
+              this.messages.push(notification);
               this.mouseClickRefresh = false;
             }
             else if(notification.speed > 150){
               notification.message = "Speed Crossed Limits !!";
-              this.notifications.push(notification);
+              this.messages.push(notification);
               this.mouseClickRefresh = false;
             }
             else
               console.log("within range")
-              console.log("notifications array: ", this.notifications)
+              console.log("notifications array: ", this.messages)
         });
     }
 

@@ -39,14 +39,15 @@ export class alertNotifierService {
 
     constructor() { }
 
-    getNotificationContent(): Observable<any> {
-        this.subscribeToMessages();
-        console.log("message subscribed in navbar")
-        return this.subject.asObservable();
-    }
+    // getNotificationContent(): Observable<any> {
+    //     this.subscribeToMessages();
+    //     console.log("message subscribed in navbar")
+    //     return this.subject.asObservable();
+    // }
 
-    subscribeToMessages() {
+    subscribeToMessages():  INotifications[] {
       this.getSocketData();
+      return this.notifications
     }
 
     
