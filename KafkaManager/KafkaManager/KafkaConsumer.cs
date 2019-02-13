@@ -101,6 +101,9 @@ namespace KafkaManager
                 }
                 else if(topic == "aaa-speedanalysis")
                 {
+                    var test = new DeviceSpeed { IMEI = message.Split(",")[0].Replace("\"",""), Speed = message.Split(",")[1] };
+                    var data = JsonConvert.SerializeObject(test);
+                    content = new StringContent(data, Encoding.UTF8, "application/json");
                     response = client.PostAsync("api/speedanalysis", content).Result;
                 }
                 
@@ -109,5 +112,10 @@ namespace KafkaManager
             response.EnsureSuccessStatusCode();
             return response;
         }
+    }
+    public class DeviceSpeed
+    {
+        public string IMEI { set; get; }
+        public string Speed { set; get; }
     }
 }
