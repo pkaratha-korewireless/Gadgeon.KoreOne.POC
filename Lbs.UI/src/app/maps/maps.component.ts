@@ -311,9 +311,10 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                 title : latlon.lat + '' + latlon.lng 
             })
             let infowindow = new google.maps.InfoWindow({
-                content: '<div id="content">' +
-                    '<b>Vehicle:' + imei + '</b>' +
-                    '</div>'
+                content:'<div id="content">' +
+                        '<i class="material-icons" style="vertical-align: bottom;font-size: 18px !important;"> directions_car </i>' +
+                        ' IMEI: ' + imei +
+                        '</div>'
             })
             let mappedMarker : IMarkerMap = {device:imei, marker:markerElement, infowindow: infowindow };
             this.markerList.push(mappedMarker);
