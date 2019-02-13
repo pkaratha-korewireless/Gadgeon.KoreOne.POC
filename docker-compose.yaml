@@ -1,0 +1,24 @@
+version: "3"
+services:
+    web:
+        #image: 'gadgeonkoreonepoc_web'
+        build: './Poc.Api'
+        ports:
+            - 5000:5000
+        #env:
+        #- name: cassandra-endpoint
+        #  value: "localhost:000"
+        #- name: elastic-endpoint
+        #  value: "localhost:000"
+    ui:
+        #image: 'gadgeonkoreonepoc_ui'
+        build: './Lbs.UI'
+        ports:
+            - 3000:80
+        #env:
+        #- name: cassandra-endpoint
+    signalr:
+        #image: 'gadgeonkoreonepoc_signalr'
+        build: './SignalR-Hub'
+        ports:
+            - 5001:5001

@@ -27,26 +27,48 @@ namespace KafkaManager
             
 
             ConfigurationBase config = new ConfigurationBase();
-            var topic = config.GetTopic();
+            var topicSpeed = config.GetTopicSpeed();
+            var topicDevice = "aaa-mapdata";
             var publisherConfig = config.GetConsumerConfig();
             var seriel = new StringSerializer();
 
-            var consumer = new Consumer<Null, string>(publisherConfig, null, new StringDeserializer(Encoding.UTF8));
-            consumer.Subscribe(topic);
-
-            consumer.OnMessage += (_, msg) =>
+            var consumerDevice = new Consumer<Null, string>(publisherConfig, null, new StringDeserializer(Encoding.UTF8));
+            consumerDevice.Subscribe(topicDevice);
+            var consumerSpeed = new Consumer<Null, string>(publisherConfig, null, new StringDeserializer(Encoding.UTF8));
+            consumerSpeed.Subscribe(topicSpeed);
+            consumerSpeed.OnMessage += (_, msg) =>
             {
                 Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
 
-               var res = CallSignalRAPI(msg.Value);
-                consumer.CommitAsync(msg);
+                var res = CallSignalRAPI(msg.Value, msg.Topic);
+                consumerSpeed.CommitAsync(msg);
             };
-            consumer.OnError += (_, error) =>
+            consumerDevice.OnMessage += (_, msg) =>
+            {
+                Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
+
+               var res = CallSignalRAPI(msg.Value, msg.Topic);
+               consumerDevice.CommitAsync(msg);
+            };
+            consumerDevice.OnError += (_, error) =>
             {
                 if (error.Code == ErrorCode.Local_Transport)
                 {
                     Thread.Sleep(1000);
-                    consumer.Subscribe(topic);
+                    consumerDevice.Subscribe(topicDevice);
+                }
+                else
+                {
+                    Volatile.Write(ref _shutdown, true);
+                }
+
+            };
+            consumerSpeed.OnError += (_, error) =>
+            {
+                if (error.Code == ErrorCode.Local_Transport)
+                {
+                    Thread.Sleep(1000);
+                    consumerSpeed.Subscribe(topicDevice);
                 }
                 else
                 {
@@ -56,22 +78,32 @@ namespace KafkaManager
             };
             while (!_shutdown)
             {
-                consumer.Poll(100);
+                consumerDevice.Poll(100);
+                consumerSpeed.Poll(100);
             }
+
+
         }
         public void Stop()
         {
             _shutdown = true;
         }
-        public static async Task<HttpResponseMessage> CallSignalRAPI(string message)
+        public static async Task<HttpResponseMessage> CallSignalRAPI(string message, string topic)
         {
-            var convertedMessage = JsonConvert.DeserializeObject(message);
             
             HttpResponseMessage response = new HttpResponseMessage();
             var content = new StringContent(message, Encoding.UTF8, "application/json");
             try
             {
-                response = client.PostAsync("api/message", content).Result;
+                if(topic == "aaa-mapdata")
+                {
+                    response = client.PostAsync("api/message", content).Result;
+                }
+                else if(topic == "aaa-speedanalysis")
+                {
+                    response = client.PostAsync("api/speedanalysis", content).Result;
+                }
+                
             }
             catch (Exception e) { }
             response.EnsureSuccessStatusCode();

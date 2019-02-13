@@ -48,12 +48,15 @@ namespace KafkaManager
                                     message.Lat = worksheet.Cells[row, col].Value.ToString();
                                 }
                             }
+                            var messageSpeed = $"{message.IMEI},{message.ActualDate},{message.Lat},{message.Lon},{message.Direction},{message.Odotemer},{message.Speed},0,{message.Temp},2, 9,0,2,12.0";
                             var json = JsonConvert.SerializeObject(message);
                             Thread.Sleep(2000);
                             try
                             {
-                                KafkaProducer producer = new KafkaProducer();
-                                producer.SendMessage(json);
+                                KafkaProducer producer1 = new KafkaProducer();
+                                KafkaProducer producer2 = new KafkaProducer("aaa-mapdata");
+                                producer1.SendMessage(messageSpeed);
+                                producer2.SendMessage(json);
                             }
                             catch (Exception ex)
                             {
