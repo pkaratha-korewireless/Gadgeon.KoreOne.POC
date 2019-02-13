@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit {
     getSocketData() {
         console.log("MAP:SocketData Init");
         this.hubConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44380/notify')
+            .withUrl('https://localhost:44380/message')
             .configureLogging(LogLevel.Information)
             .build();
         this.hubConnection.start()
