@@ -26,11 +26,15 @@ export class SpeedanalysisComponet implements OnInit {
   loading: boolean;
   public chart: any;
   speed: Number[] = [];
-  options: Object;
  
-  testdata:any=[];
+ 
+  //testdata:any=[];
   speedData:any=[];
+
+
   jsonobject: any;
+  
+  jsonobjecttest :any;
   tupplejson: any;
   lessthan20count: number = 0;
   tuplelessthan20: any[] = [];
@@ -49,42 +53,120 @@ export class SpeedanalysisComponet implements OnInit {
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   private hubConnection: signalR.HubConnection;
+  testdata = [  
+    {  
+        "IMEI":"000013612345680",
+        "Speed":0
+     },
+    {  
+       "IMEI":"000013612345681",
+       "Speed":0
+    },
+    {  
+       "IMEI":"000013612345682",
+       "Speed":0
+    },
+    {  
+        "IMEI":"000013612345683",
+        "Speed":0
+     },
+     {  
+        "IMEI":"000013612345684",
+        "Speed":0
+     },
+     {  
+        "IMEI":"000013612345685",
+        "Speed":0
+     },
+     {  
+        "IMEI":"000013612345686",
+        "Speed":0
+     },
+     {  
+         "IMEI":"000013612345687",
+         "Speed":0
+      },
+      {  
+         "IMEI":"000013612345688",
+         "Speed":0
+      },
+      {  
+         "IMEI":"000013612345689",
+         "Speed":0
+      }
+ ]
+ options:object;
 
-  constructor(private livedata:LiveDataService) { }
+  constructor(private livedata:LiveDataService) { 
+    this.jsonobjecttest = [{ 'name': 'lessthan20', 'y': 10 }, { 'name': 'lessthan40', 'y': 0 }, { 'name': 'lessthan40', 'y': 0 },
+  { 'name': 'lessthan60', 'y': 0}, { 'name': 'lessthan90', 'y': 0 }, { 'name': 'lessthan150', 'y': 0 }, { 'name': 'morethan150', 'y': 0 }];
 
+    this.options = {
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.livedata.getJSON().subscribe(data => {
-      
-            this.testdata=data;
-            this.drawChart();
+      title: { text: "Speed Analysis" },
+      chart: {
+        type: 'bar',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift'
+      },
+      plotOptions: {
+        series: {
+        
+          
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}'
+          }
+    
+        }
        
-           });
+      },
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {
+        title: {
+          text: 'Speed range of vehicles'
+        }
+      },
+      "series": [
+        {
+          "name": "Count",
+          "colorByPoint": true,
+          "data": this.jsonobjecttest
+        }
+      ]   
+     
+    }
+
+  }
+
+ 
+  ngOnInit() {
+
+    this.dataSource.paginator = this.paginator;    
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(AppConfig.socket_url_speedanalysis)
       .configureLogging(signalR.LogLevel.Information)
       .build();
     this.hubConnection.start()
       .then(() => console.log('Connection started!'));          
-      this.hubConnection.on('BroadcastMessage', (data: any) => { 
-             
-        this.speedData=JSON.parse(data);
-      
-        this.speedData.forEach(element => {
+      this.hubConnection.on('BroadcastMessage', (data: any) => {              
+        let speedData=JSON.parse(data);
+        console.log("SpeedAnalysis", speedData)
+    
           this.testdata.forEach(function(item) {
-            if (element.IMEI === item.IMEI) {
-              item.Speed = element.Speed
+            if (item.IMEI === speedData.IMEI) {
+              item.Speed = speedData.Speed
             }
           });
-        });
         
         this.drawChart();
       
        
     });
   }
-
 
   drawChart(){
     this.tuplelessthan20=[];
@@ -101,8 +183,7 @@ export class SpeedanalysisComponet implements OnInit {
     this.morethan150count=0;
 
     for (var i = 0; i < this.testdata.length; i++) {
-      //console.log(this.speedData[i][i].Speed,this.speedData[i]['Speed'],JSON.parse(this.speedData[i])[i].Speed)
-      let parsedData = this.testdata;
+       let parsedData = this.testdata;
       if (parsedData[i].Speed <= 20) {
         this.lessthan20count++;
         let tu = { 'device': parsedData[i].IMEI, 'speed': parsedData[i].Speed };
@@ -157,6 +238,8 @@ export class SpeedanalysisComponet implements OnInit {
       },
       plotOptions: {
         series: {
+          animation:false,
+          
           dataLabels: {
             enabled: true,
             format: '{point.y}'
@@ -188,6 +271,7 @@ export class SpeedanalysisComponet implements OnInit {
       ]
 
     }
+    
 
   }
  
