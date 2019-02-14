@@ -20,7 +20,7 @@ namespace KafkaManager
             {
                 var filePath = $@"D:\location-coordinates\{i}\track_points.xlsx";
                 var file1 = new FileInfo(filePath);
-                var imei1 = $"12345{i}";
+                var imei1 = $"00001361234568{i}";
                 Thread myThread = new Thread(() => ThreadCall(file1,imei1));
                 myThread.Start();
             }
