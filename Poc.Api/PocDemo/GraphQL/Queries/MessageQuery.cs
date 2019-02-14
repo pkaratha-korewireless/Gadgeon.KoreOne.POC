@@ -16,7 +16,7 @@ namespace PoC.Api.GraphQL.Queries
             Field<ListGraphType<MessageType>>(
                 name: "get_cassandra_data",
                 description: "Get last 20 rows from cassandra table",
-                arguments: new QueryArguments{ new QueryArgument<NonNullGraphType<StringGraphType>> { Name="imei"} },
+                arguments: new QueryArguments{ new QueryArgument<StringGraphType> { Name="imei"} },
                 resolve: context => {
                     var imei = context.GetArgument<string>("imei");
                     return messageService.GetCassandraData(imei);

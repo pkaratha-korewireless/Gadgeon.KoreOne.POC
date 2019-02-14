@@ -43,7 +43,11 @@ namespace PoC.Data.Repository
 
         public IEnumerable<T> Get<T>(string imei)
         {
-            var query = $"select * from {KEY_SPACE}.{TABLE_NAME} where imei = '{imei}' order by actual_date desc;";
+            string query;
+            if(imei==null)
+                query = $"select * from {KEY_SPACE}.{TABLE_NAME} limit 20;";
+            else
+                query = $"select * from {KEY_SPACE}.{TABLE_NAME} where imei = '{imei}' order by actual_date desc limit 20;";
             IEnumerable<T> result = mapper.Fetch<T>(query);
             return result;
         }
