@@ -7,7 +7,7 @@ namespace PoC.Data.Repository
 {
     public interface ICassandraRepository
     {
-        IEnumerable<T> Get<T>();
+        IEnumerable<T> Get<T>(string imei);
         Message AddMessage(Message message);
     }
 }
