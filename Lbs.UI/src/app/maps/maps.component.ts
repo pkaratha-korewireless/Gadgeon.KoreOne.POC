@@ -41,17 +41,9 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     zoom: Number = 12;
 
     marker_icon_url_normal: string = "./assets/img/car_icon_normal.png"
-    marker_icon_url_error: string = "./assets/img/car_icon_red.png"
-
-
-    minFuelLevel: Number = 20;
-    maxSpeed: Number = 100;
 
     polyLine: any[] = [];
 
-    origin: any
-    destination: any
-    contentString: any[] = [];
 
 
     initFlag = false;
@@ -256,13 +248,6 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                     };
                     try {
                         this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-                        // let markerElement = new google.maps.Marker({
-                        //     position: myLatlng,
-                        //     map: this.map,
-                        //     icon: this.marker_icon_url_normal
-                        // })
-                        // console.log("dummy marker : ",markerElement)
-                        // markerElement.setMap(this.map);
                     }
                     catch (E) {
                         this.map = null;
@@ -287,13 +272,14 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
             this.socketData = JSON.parse(data);
             console.log("MAP:SocketData:", data);
             let imei = this.socketData["IMEI"];
+            let speed = this.socketData["Speed"];
             //let mapper: IMarkerMap = { device: this.socketData["IMEI"], markerName: this.socketData["IMEI"] }
-            let latlon: ICoord = { lat: this.socketData["Lat"], lng: this.socketData["Lon"] }
-            this.updateMapData(imei, latlon);
+            let latlon: ICoord = { lat: this.socketData["Lat"], lng: this.socketData["Lon"] }            
+            this.updateMapData(imei, latlon, speed);
         });
     }
 
-    updateMapData(imei: string, latlon: ICoord) {
+    updateMapData(imei: string, latlon: ICoord, speed: any ) {
         console.log(imei,this.imeiList)
         if (this.imeiList.includes(imei)) {
             this.markerList.forEach(element => {
@@ -308,20 +294,25 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                 position: new google.maps.LatLng(latlon.lng, latlon.lat),
                 map: this.map,
                 icon: this.marker_icon_url_normal,
-                title : latlon.lat + '' + latlon.lng 
+                title : latlon.lat + '' + latlon.lng,
+                animation: google.maps.Animation.DROP 
             })
             let infowindow = new google.maps.InfoWindow({
                 content:'<div id="content">' +
                         '<i class="material-icons" style="vertical-align: bottom;font-size: 18px !important;"> directions_car </i>' +
-                        ' IMEI: ' + imei +
-                        '</div>'
+                        ' IMEI: ' + imei +', Speed: ' + speed +
+                        '</div>',
+                zIndex: -1
             })
             let mappedMarker : IMarkerMap = {device:imei, marker:markerElement, infowindow: infowindow };
             this.markerList.push(mappedMarker);
             markerElement.setMap(this.map);
-            markerElement.addListener('click', function () {
+            markerElement.addListener('mouseover', function () {
                 infowindow.open(this.map, markerElement);
             });
+            markerElement.addListener('click', function () {
+              infowindow.close(this.map, markerElement);
+          });
             console.log("Marker Details:", this.markerList, latlon)
             this.imeiList.push(imei);
         }
