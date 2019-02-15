@@ -22,6 +22,7 @@ namespace KafkaManager
                 var file1 = new FileInfo(filePath);
                 var imei1 = $"00001361234568{i}";
                 Thread myThread = new Thread(() => ThreadCall(file1,imei1));
+                Thread.Sleep(2000);
                 myThread.Start();
             }
         }
@@ -69,7 +70,7 @@ namespace KafkaManager
                         {
                             KafkaProducer producer1 = new KafkaProducer();
                             KafkaProducer producer2 = new KafkaProducer("aaa-mapdata");
-                            producer1.SendMessage(messageSpeed);
+                            producer1.SendMessage(messageSpeed.Replace("\"",""));
                             producer2.SendMessage(json);
                             Console.WriteLine(json);
                         }

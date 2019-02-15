@@ -12,7 +12,7 @@ namespace PoC.Data.Repository
 {
     public class CassandraRepository : ICassandraRepository
     {
-        private readonly string END_POINT = "127.0.0.1";
+        private readonly string END_POINT = "192.168.65.146";
         private readonly string KEY_SPACE = "koreone";
         private readonly string TABLE_NAME = "device_messages";
 
