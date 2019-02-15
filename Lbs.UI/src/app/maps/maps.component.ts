@@ -22,6 +22,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     markerList: any[] = [];
     infowindow: any[] = [];
     imeiList = [];
+
     ngOnInit() {
         this.initMap();
         this.getSocketData();
@@ -43,7 +44,6 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
     marker_icon_url_normal: string = "./assets/img/car_icon_normal.png"
 
     polyLine: any[] = [];
-
 
 
     initFlag = false;
@@ -286,6 +286,11 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
                 console.log("IMEI::::::",element.device )
                 if(element.device == imei){
                     element.marker.setPosition(new google.maps.LatLng(latlon.lng, latlon.lat))
+                    let contentstring = '<div id="content">' +
+                                        '<i class="material-icons" style="vertical-align: bottom;font-size: 18px !important;"> directions_car </i>' +
+                                        ' IMEI: ' + imei +', Speed: ' + speed +
+                                        '</div>';
+                    element.infowindow.setContent(contentstring)
                 }
             });
         }
@@ -310,7 +315,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
             markerElement.addListener('mouseover', function () {
                 infowindow.open(this.map, markerElement);
             });
-            markerElement.addListener('click', function () {
+            markerElement.addListener('mouseout', function () {
               infowindow.close(this.map, markerElement);
           });
             console.log("Marker Details:", this.markerList, latlon)
