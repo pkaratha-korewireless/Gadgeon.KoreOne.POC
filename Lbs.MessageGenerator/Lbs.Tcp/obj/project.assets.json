@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\KoreOne-POC\\Angular5\\Lbs.MessageGenerator\\Lbs.Tcp\\Lbs.Tcp.csproj",
+      "projectUniqueName": "D:\\KoreOne-POC\\Gadgeon.KoreOne.POC\\Lbs.MessageGenerator\\Lbs.Tcp\\Lbs.Tcp.csproj",
       "projectName": "Lbs.Tcp",
-      "projectPath": "D:\\KoreOne-POC\\Angular5\\Lbs.MessageGenerator\\Lbs.Tcp\\Lbs.Tcp.csproj",
+      "projectPath": "D:\\KoreOne-POC\\Gadgeon.KoreOne.POC\\Lbs.MessageGenerator\\Lbs.Tcp\\Lbs.Tcp.csproj",
       "packagesPath": "C:\\Users\\pkaratha\\.nuget\\packages\\",
-      "outputPath": "D:\\KoreOne-POC\\Angular5\\Lbs.MessageGenerator\\Lbs.Tcp\\obj\\",
+      "outputPath": "D:\\KoreOne-POC\\Gadgeon.KoreOne.POC\\Lbs.MessageGenerator\\Lbs.Tcp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

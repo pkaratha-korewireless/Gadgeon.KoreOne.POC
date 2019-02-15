@@ -7,7 +7,19 @@
                         <h4 class="card-title mt-0"> Messages from Devices</h4>
                         <p class="card-category"> Displaying last 20 rows from cassandra table</p>
                     </div>
+                    
+                    
                     <div class="card-body">
+                            <div class="col-md-3 col-md-offset-3 pull-right">
+                                    <div class="dropdown dropdown-menu-right" >
+                                            <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownButton">{{buttonLabel}}
+                                                    <span class="caret"></span></button>
+                                             <ul class="dropdown-menu" role="menu">
+                                                <li *ngFor="let vehicle of vehicles" [value]="vehicle.imei" (click)="getMessages(vehicle)" class="dropdown-item">
+                                                    {{vehicle.name}}</li>
+                                            </ul>
+                                    </div>
+                            </div>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>

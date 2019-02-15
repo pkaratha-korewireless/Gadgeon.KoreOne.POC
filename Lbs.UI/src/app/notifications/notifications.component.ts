@@ -51,7 +51,6 @@ export class NotificationsComponent implements OnInit {
     this.notifications = this.alertService.subscribeToMessages();
 
   }
-
   // hubConnection: any;
   // socketData = [];
   // getSocketData() {

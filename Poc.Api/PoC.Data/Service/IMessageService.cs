@@ -8,7 +8,7 @@ namespace PoC.Data.Service
 {
     public interface IMessageService
     {
-        IEnumerable<Message> GetCassandraData();
+        IEnumerable<Message> GetCassandraData(string imei);
         IEnumerable<Message> GetElasticData();
         Message AddMessage(Message message);
 

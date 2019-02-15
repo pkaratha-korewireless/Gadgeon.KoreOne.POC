@@ -22,9 +22,9 @@ namespace PoC.Data.Service
             _elasticRepository = elasticRepository;
             AllEvents = new ConcurrentStack<Message>();
         }
-        public IEnumerable<Message> GetCassandraData()
+        public IEnumerable<Message> GetCassandraData(string imei)
         {
-            return _cassandraRepository.Get<Message>();
+            return _cassandraRepository.Get<Message>(imei);
         }
 
         public IEnumerable<Message> GetElasticData()

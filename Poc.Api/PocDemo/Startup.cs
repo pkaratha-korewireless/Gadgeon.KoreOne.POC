@@ -78,7 +78,8 @@ namespace Poc.Api
             services.AddMvc();
             services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder =>
           builder.AllowAnyOrigin()
-          .AllowAnyMethod()
+          .AllowAnyMethod().
+          AllowCredentials()
           .AllowAnyHeader()));
         }
 

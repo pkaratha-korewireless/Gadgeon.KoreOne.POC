@@ -8,6 +8,7 @@ Drilldown(Highcharts);
 import Exporting from 'highcharts/modules/exporting';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { AppConfig } from 'app/config/app.config';
+import {LiveDataService} from '../services/livedata.service';
 Exporting(Highcharts);
 
 
@@ -25,9 +26,15 @@ export class SpeedanalysisComponet implements OnInit {
   loading: boolean;
   public chart: any;
   speed: Number[] = [];
-  options: Object;
-  speedData: any=[];
+ 
+ 
+  //testdata:any=[];
+  speedData:any=[];
+
+
   jsonobject: any;
+  
+  jsonobjecttest :any;
   tupplejson: any;
   lessthan20count: number = 0;
   tuplelessthan20: any[] = [];
@@ -45,118 +52,230 @@ export class SpeedanalysisComponet implements OnInit {
   displayedColumns: string[] = ['device', 'speed']; 
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  private hubConnection: signalR.HubConnection
- 
+  private hubConnection: signalR.HubConnection;
+  testdata = [  
+    {  
+        "IMEI":"000013612345680",
+        "Speed":0
+     },
+    {  
+       "IMEI":"000013612345681",
+       "Speed":0
+    },
+    {  
+       "IMEI":"000013612345682",
+       "Speed":0
+    },
+    {  
+        "IMEI":"000013612345683",
+        "Speed":0
+     },
+     {  
+        "IMEI":"000013612345684",
+        "Speed":0
+     },
+     {  
+        "IMEI":"000013612345685",
+        "Speed":0
+     },
+     {  
+        "IMEI":"000013612345686",
+        "Speed":0
+     },
+     {  
+         "IMEI":"000013612345687",
+         "Speed":0
+      },
+      {  
+         "IMEI":"000013612345688",
+         "Speed":0
+      },
+      {  
+         "IMEI":"000013612345689",
+         "Speed":0
+      }
+ ]
+ options:object;
 
+  constructor(private livedata:LiveDataService) { 
+    this.jsonobjecttest = [{ 'name': 'lessthan20', 'y': 10 }, { 'name': 'lessthan40', 'y': 0 }, { 'name': 'lessthan40', 'y': 0 },
+  { 'name': 'lessthan60', 'y': 0}, { 'name': 'lessthan90', 'y': 0 }, { 'name': 'lessthan150', 'y': 0 }, { 'name': 'morethan150', 'y': 0 }];
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.options = {
+
+      title: { text: "Speed Analysis" },
+      chart: {
+        type: 'bar',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift'
+      },
+      plotOptions: {
+        series: {
+        
+          
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}'
+          }
+    
+        }
+       
+      },
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {
+        title: {
+          text: 'Speed range of vehicles'
+        }
+      },
+      "series": [
+        {
+          "name": "Count",
+          "colorByPoint": true,
+          "data": this.jsonobjecttest
+        }
+      ]   
+     
+    }
+
   }
+
  
-  constructor() {
+  ngOnInit() {
 
-
+    this.dataSource.paginator = this.paginator;    
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(AppConfig.socket_url_speedanalysis)
       .configureLogging(signalR.LogLevel.Information)
       .build();
     this.hubConnection.start()
-      .then(() => console.log('Connection started!'))
-      .catch(err => console.error('Error while establishing connection :('));     
-      this.hubConnection.on('BroadcastMessage', (data: any) => {       
+      .then(() => console.log('Connection started!'));          
+      this.hubConnection.on('BroadcastMessage', (data: any) => {              
+        let speedData=JSON.parse(data);
+        console.log("SpeedAnalysis", speedData)
+    
+          this.testdata.forEach(function(item) {
+            if (item.IMEI === speedData.IMEI) {
+              item.Speed = speedData.Speed
+            }
+          });
         
-        this.speedData.push(data);
-        for (var i = 0; i < this.speedData.length; i++) {
-          //console.log(this.speedData[i]["Speed"],this.speedData[i]['Speed'],JSON.parse(this.speedData[i])["Speed"])
-          let parsedData = JSON.parse(this.speedData[i]);
-          if (parsedData["Speed"] <= 20) {
-            this.lessthan20count++;
-            let tu = [{ 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] }];
-            this.tuplelessthan20.push(tu);
-            this.tuppleAll.push(tu);
-          }
-          else if (parsedData["Speed"] > 20 && parsedData["Speed"] <= 40) {
-            this.lessthan40count++;
-            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
-            this.tuplelessthan40.push(tu);
-            this.tuppleAll.push(tu);
-          }
-          else if (parsedData["Speed"] > 40 && parsedData["Speed"] <= 60) {
-            this.lessthan60count++;
-            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
-            this.tupplelessthan60.push(tu);
-            this.tuppleAll.push(tu);
-          }
-          else if (parsedData["Speed"] > 60 && parsedData["Speed"] <= 90) {
-            this.lessthan90count++;
-            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
-            this.tupplelessthan90.push(tu);
-            this.tuppleAll.push(tu);
-          }
-          else if (parsedData["Speed"] > 90 && parsedData["Speed"] <= 150) {
-            this.lessthan150count++;
-            let tu = { 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] };
-            this.tupplelessthan150.push(tu);
-            this.tuppleAll.push(tu);
-          }
-          else {
-            this.morethan150count++;
-            let tu = [{ 'device': parsedData["IMEI"], 'speed': parsedData["Speed"] }];
-            this.tupplemorethan150.push(tu);
-            this.tuppleAll.push(tu);
-          }
-        }
-        this.dataSource = new MatTableDataSource<any>(this.tuppleAll);
-        this.dataSource.paginator = this.paginator;
-        this.jsonobject = [{ 'name': 'lessthan20', 'y': this.lessthan20count }, { 'name': 'lessthan40', 'y': this.lessthan40count }, { 'name': 'lessthan40', 'y': this.lessthan40count },
-        { 'name': 'lessthan60', 'y': this.lessthan60count }, { 'name': 'lessthan90', 'y': this.lessthan90count }, { 'name': 'lessthan150', 'y': this.lessthan150count }, { 'name': 'morethan150', 'y': this.morethan150count }];
-  
-        var that = this;
-        this.options = {
-  
-          title: { text: "Speed Analysis" },
-          chart: {
-            type: 'bar',
-            zoomType: 'x',
-            panning: true,
-            panKey: 'shift'
-          },
-          plotOptions: {
-            series: {
-              dataLabels: {
-                enabled: true,
-                format: '{point.y}'
-              }
-  
-            },
-            bar: {
-              events: {
-                click: function (event) {
-                  that.onClick(event.point.category);               
-                }
-              }
-            }
-          },
-          xAxis: {
-            type: 'category'
-          },
-          yAxis: {
-            title: {
-              text: 'Speed range of vehicles'
-            }
-          },
-          "series": [
-            {
-              "name": "Count",
-              "colorByPoint": true,
-              "data": this.jsonobject
-            }
-          ]
-  
-        }
-  
+        this.drawChart();
+      
+       
     });
   }
+
+  drawChart(){
+    this.tuplelessthan20=[];
+    this.tuplelessthan40=[];
+    this.tupplelessthan60=[];
+    this.tupplelessthan90=[];
+    this.tupplelessthan150=[];
+    this.tupplemorethan150=[];
+    this.lessthan20count=0;
+    this.lessthan40count=0;
+    this.lessthan60count=0;
+    this.lessthan90count=0;
+    this.lessthan150count=0;
+    this.morethan150count=0;
+
+    for (var i = 0; i < this.testdata.length; i++) {
+       let parsedData = this.testdata;
+      if (parsedData[i].Speed <= 20) {
+        this.lessthan20count++;
+        let tu = { 'device': parsedData[i].IMEI, 'speed': parsedData[i].Speed };
+        this.tuplelessthan20.push(tu);
+        this.tuppleAll.push(tu);
+      }
+      else if (parsedData[i].Speed > 20 && parsedData[i].Speed <= 40) {
+        this.lessthan40count++;
+        let tu = { 'device': parsedData[i].IMEI, 'speed': parsedData[i].Speed };
+        this.tuplelessthan40.push(tu);
+        this.tuppleAll.push(tu);
+      }
+      else if (parsedData[i].Speed > 40 && parsedData[i].Speed <= 60) {
+        this.lessthan60count++;
+        let tu = { 'device': parsedData[i].IMEI, 'speed': parsedData[i].Speed };
+        this.tupplelessthan60.push(tu);
+        this.tuppleAll.push(tu);
+      }
+      else if (parsedData[i].Speed > 60 && parsedData[i].Speed <= 90) {
+        this.lessthan90count++;
+        let tu = { 'device': parsedData[i].IMEI, 'speed': parsedData[i].Speed };
+        this.tupplelessthan90.push(tu);
+        this.tuppleAll.push(tu);
+      }
+      else if (parsedData[i].Speed > 90 && parsedData[i].Speed <= 150) {
+        this.lessthan150count++;
+        let tu = { 'device': parsedData[i].IMEI, 'speed': parsedData[i].Speed };
+        this.tupplelessthan150.push(tu);
+        this.tuppleAll.push(tu);
+      }
+      else {
+        this.morethan150count++;
+        let tu = { 'device': parsedData[i].IMEI, 'speed': parsedData[i].Speed };
+        this.tupplemorethan150.push(tu);
+        this.tuppleAll.push(tu);
+      }
+    }
+    this.dataSource = new MatTableDataSource<any>(this.tuppleAll);
+    this.dataSource.paginator = this.paginator;
+    this.jsonobject = [{ 'name': 'lessthan20', 'y': this.lessthan20count }, { 'name': 'lessthan40', 'y': this.lessthan40count }, { 'name': 'lessthan40', 'y': this.lessthan40count },
+    { 'name': 'lessthan60', 'y': this.lessthan60count }, { 'name': 'lessthan90', 'y': this.lessthan90count }, { 'name': 'lessthan150', 'y': this.lessthan150count }, { 'name': 'morethan150', 'y': this.morethan150count }];
+
+    var that = this;
+    this.options = {
+
+      title: { text: "Speed Analysis" },
+      chart: {
+        type: 'bar',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift'
+      },
+      plotOptions: {
+        series: {
+          animation:false,
+          
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}'
+          }
+
+        },
+        bar: {
+          events: {
+            click: function (event) {
+              that.onClick(event.point.category);               
+            }
+          }
+        }
+      },
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {
+        title: {
+          text: 'Speed range of vehicles'
+        }
+      },
+      "series": [
+        {
+          "name": "Count",
+          "colorByPoint": true,
+          "data": this.jsonobject
+        }
+      ]
+
+    }
+    
+
+  }
+ 
+  
 
   onClick(x) {
     var index = x;

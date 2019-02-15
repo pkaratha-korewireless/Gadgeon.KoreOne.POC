@@ -26,3 +26,4 @@ D:\KoreOne-POC\Gadgeon.KoreOne.POC\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2
 D:\KoreOne-POC\Gadgeon.KoreOne.POC\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalR-Hub.RazorTargetAssemblyInfo.cache
 D:\KoreOne-POC\Gadgeon.KoreOne.POC\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalRHub.dll
 D:\KoreOne-POC\Gadgeon.KoreOne.POC\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\SignalRHub.pdb
+D:\KoreOne-POC\Gadgeon.KoreOne.POC\SignalR-Hub\SignalR-Hub\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

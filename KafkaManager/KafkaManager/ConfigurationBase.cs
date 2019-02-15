@@ -42,9 +42,13 @@ namespace KafkaManager
             return publisherConfig;
         }
 
-        public string GetTopic()
+        public string GetTopicDevice()
         {
-            return _iConfiguration["topic"];
+            return _iConfiguration["topicDevice"];
+        }
+        public string GetTopicSpeed()
+        {
+            return _iConfiguration["topicSpeed"];
         }
 
         public Dictionary<string, object> GetConsumerConfig()

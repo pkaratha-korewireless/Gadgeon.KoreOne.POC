@@ -12,7 +12,7 @@ namespace PoC.Data.Repository
 {
     public class CassandraRepository : ICassandraRepository
     {
-        private readonly string END_POINT = "127.0.0.1";
+        private readonly string END_POINT = "192.168.65.146";
         private readonly string KEY_SPACE = "koreone";
         private readonly string TABLE_NAME = "device_messages";
 
@@ -41,9 +41,13 @@ namespace PoC.Data.Repository
             return message;
         }
 
-        public IEnumerable<T> Get<T>()
+        public IEnumerable<T> Get<T>(string imei)
         {
-            var query = $"select * from {KEY_SPACE}.{TABLE_NAME} limit 20;";
+            string query;
+            if(imei==null)
+                query = $"select * from {KEY_SPACE}.{TABLE_NAME} limit 20;";
+            else
+                query = $"select * from {KEY_SPACE}.{TABLE_NAME} where imei = '{imei}' order by actual_date desc limit 20;";
             IEnumerable<T> result = mapper.Fetch<T>(query);
             return result;
         }
