@@ -310,7 +310,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
             markerElement.addListener('mouseover', function () {
                 infowindow.open(this.map, markerElement);
             });
-            markerElement.addListener('click', function () {
+            markerElement.addListener('mouseout', function () {
               infowindow.close(this.map, markerElement);
           });
             console.log("Marker Details:", this.markerList, latlon)
