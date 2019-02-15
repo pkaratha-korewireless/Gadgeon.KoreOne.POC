@@ -72,7 +72,7 @@ namespace KafkaManager
                             KafkaProducer producer2 = new KafkaProducer("aaa-mapdata");
                             producer1.SendMessage(messageSpeed.Replace("\"",""));
                             producer2.SendMessage(json);
-                            Console.WriteLine(json);
+                            Console.WriteLine("sent message");
                         }
                         catch (Exception ex)
                         {

@@ -38,14 +38,14 @@ namespace KafkaManager
             consumerSpeed.Subscribe(topicSpeed);
             consumerSpeed.OnMessage += (_, msg) =>
             {
-                Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
+                Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} ");
 
                 var res = CallSignalRAPI(msg.Value, msg.Topic);
                 consumerSpeed.CommitAsync(msg);
             };
             consumerDevice.OnMessage += (_, msg) =>
             {
-                Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
+                Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset}");
 
                var res = CallSignalRAPI(msg.Value, msg.Topic);
                consumerDevice.CommitAsync(msg);
