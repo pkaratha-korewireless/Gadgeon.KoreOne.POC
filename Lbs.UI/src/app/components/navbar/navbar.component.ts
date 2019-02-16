@@ -24,9 +24,8 @@ export class NavbarComponent implements OnInit {
     // @Output() notifications: Array<any> = [];
     // @Output() messages: any[] = [];
 
-    // @Output() testData:any;
-
     messages: INotifications[] = [];
+    latestMessages: INotifications[] = [];
 
     subscription: Subscription;
 
@@ -49,22 +48,6 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
         });
-   
-        //this.messages = this.alertService.alerts;
-    
-        // interval(1000).subscribe(a => {
-        //     this.notifierService.sendMessage$.subscribe(message => { this.testData = message; });
-        //     this.mouseClickRefresh = false;
-       
-        // console.log("Test Data"+ this.testData);
-        // });
-        // debugger;
-        // this.notifierService.getNotificationContent().subscribe(message =>
-        //     {
-        //         debugger;
-        //         console.log(message)
-        //         this.messages.push(message);
-        //     });
 
         this.getSocketData();
 
@@ -93,17 +76,17 @@ export class NavbarComponent implements OnInit {
             if (notification.speed > 150 && notification.fuel < 10 ) {
               notification.message = "Speed Crossed Limits and Low Fuel Level !!";
               this.messages.push(notification);
-              this.mouseClickRefresh = false;
+              this.latestMessages.push(notification);
             }
             else if (notification.fuel < 10 ){
               notification.message = "Low Fuel Level !!";
               this.messages.push(notification);
-              this.mouseClickRefresh = false;
+              this.latestMessages.push(notification);
             }
             else if(notification.speed > 150){
               notification.message = "Speed Crossed Limits !!";
               this.messages.push(notification);
-              this.mouseClickRefresh = false;
+              this.latestMessages.push(notification);
             }
             else
               console.log("within range")
@@ -201,12 +184,8 @@ export class NavbarComponent implements OnInit {
         }
         return 'Dashboard';
     }
-    // getMessageLength(){
-    //     return this.messages.length;
-    // }
-    mouseClickRefresh: boolean;
+
     messageCountRefresh(){
-       // debugger;
-        this.mouseClickRefresh = true;
+        this.latestMessages = [];
     }
 }

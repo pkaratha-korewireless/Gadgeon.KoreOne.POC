@@ -21,9 +21,10 @@
             </form> -->
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <div class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    (click)="messageCountRefresh()">
                         <i class="material-icons">notifications</i>
-                        <span class="notification" *ngIf="(messages.length > 0)">{{ messages.length }}</span>
+                        <span class="notification" *ngIf="(latestMessages.length > 0)">{{ latestMessages.length }}</span>
                         <p>
                             <span class="d-lg-none d-md-block">Some Actions</span>
                         </p>
