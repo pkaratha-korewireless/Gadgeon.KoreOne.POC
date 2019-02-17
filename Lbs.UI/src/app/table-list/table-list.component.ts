@@ -38,10 +38,9 @@ export class TableListComponent implements OnInit{
   loading: boolean;
   public querySubscription: Subscription;
   selectedImei: string;
-  buttonLabel: string = 'Vehicle 3';
+  buttonLabel: string = 'Vehicle 4';
   
-  vehicles: any[] = [
-  {name: 'Vehicle 3', imei:'000013612345680'}, {name: 'Vehicle 4', imei:'000013612345681'}, 
+  vehicles: any[] = [ {name: 'Vehicle 4', imei:'000013612345681'}, 
   {name: 'Vehicle 5', imei:'000013612345682'}, {name: 'Vehicle 6', imei:'000013612345683'}, 
   {name: 'Vehicle 7', imei:'000013612345684'}, {name: 'Vehicle 8', imei:'000013612345685'}];
 

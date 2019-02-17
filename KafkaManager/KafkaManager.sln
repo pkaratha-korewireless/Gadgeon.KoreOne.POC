@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaManager", "KafkaManager\KafkaManager.csproj", "{A522FBBD-540B-44D2-81D9-0EE7AE2E88FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageGenerator", "MessageGenerator\MessageGenerator.csproj", "{205068CB-2D58-4F29-80AA-1CE8C4E8DA7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageGenerator", "MessageGenerator\MessageGenerator.csproj", "{205068CB-2D58-4F29-80AA-1CE8C4E8DA7E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1BDC198B-9D98-4EE8-8125-F6271DDE1D4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{205068CB-2D58-4F29-80AA-1CE8C4E8DA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{205068CB-2D58-4F29-80AA-1CE8C4E8DA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{205068CB-2D58-4F29-80AA-1CE8C4E8DA7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDC198B-9D98-4EE8-8125-F6271DDE1D4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BDC198B-9D98-4EE8-8125-F6271DDE1D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BDC198B-9D98-4EE8-8125-F6271DDE1D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BDC198B-9D98-4EE8-8125-F6271DDE1D4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

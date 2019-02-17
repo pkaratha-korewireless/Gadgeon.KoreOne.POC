@@ -51,7 +51,7 @@ namespace KafkaManager
                         message.Voltage = 50 + row % 20;
                         message.Speed = 48 + row % 20;
                         message.Temp = row % 20;
-                        message.ActualDate = DateTime.Now;
+                        message.ActualDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                         for (int col = 1; col <= ColCount; col++)
                         {
                             if (col % 2 == 0)
@@ -87,6 +87,11 @@ namespace KafkaManager
                 Console.WriteLine("Error Occured:", ex.Message);
             }
         }
+        private static long ConvertToTimestamp(DateTime value)
+        {
+            long epoch = (value.Ticks - 621355968000000000) / 10000000;
+            return epoch;
+        }
     }
 
     
@@ -95,7 +100,7 @@ namespace KafkaManager
     {
         
         public string IMEI { get; set; }
-        public DateTime ActualDate { get; set; }
+        public string ActualDate { get; set; }
         public decimal Direction { get; set; }
         public string Lat { get; set; }
         public string Lon { get; set; }

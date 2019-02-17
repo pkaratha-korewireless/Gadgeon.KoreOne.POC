@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  kafkamanager:
+    image: ${DOCKER_REGISTRY-}kafkamanager
+    build:
+      context: .
+      dockerfile: KafkaManager/Dockerfile

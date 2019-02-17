@@ -38,6 +38,7 @@ namespace KafkaManager
             consumerSpeed.Subscribe(topicSpeed);
             consumerSpeed.OnMessage += (_, msg) =>
             {
+
                 Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} ");
 
                 var res = CallSignalRAPI(msg.Value, msg.Topic);
@@ -45,7 +46,7 @@ namespace KafkaManager
             };
             consumerDevice.OnMessage += (_, msg) =>
             {
-                Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset}");
+                Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {msg.Value}");
 
                var res = CallSignalRAPI(msg.Value, msg.Topic);
                consumerDevice.CommitAsync(msg);
@@ -92,7 +93,7 @@ namespace KafkaManager
         {
             
             HttpResponseMessage response = new HttpResponseMessage();
-            var content = new StringContent(message, Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json");
             try
             {
                 if(topic == "aaa-mapdata")
@@ -102,7 +103,7 @@ namespace KafkaManager
                 else if(topic == "aaa-speedanalysis")
                 {
                     var test = new DeviceSpeed { IMEI = message.Split(",")[0], Speed = message.Split(",")[1] };
-                    var data = JsonConvert.SerializeObject(JsonConvert.SerializeObject(test).ToString()).ToString();
+                    var data = JsonConvert.SerializeObject(JsonConvert.SerializeObject((test)).ToString());
                     content = new StringContent(data, Encoding.UTF8, "application/json");
                     response = client.PostAsync("api/speedanalysis", content).Result;
                 }
