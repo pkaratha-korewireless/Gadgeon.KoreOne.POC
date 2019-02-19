@@ -12,13 +12,24 @@ services:
         #  value: "localhost:000"
     ui:
         #image: 'gadgeonkoreonepoc_ui'
-        build: './Lbs.UI'
+        build: 
+            context: './Lbs.UI'
+            dockerfile: KafkaManager/Dockerfile
         ports:
             - 3000:80
         #env:
         #- name: cassandra-endpoint
     signalr:
         #image: 'gadgeonkoreonepoc_signalr'
-        build: './SignalR-Hub'
+        build: 
+            context: './SignalR-Hub'
+            dockerfile: 
         ports:
             - 5001:5001
+            version: '3.4'
+
+    kafkamanager:
+        image: poc_kafkamanager
+        build:
+            context: KafkaManager
+            dockerfile: KafkaManager/KafkaManager/Dockerfile

@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   kafkamanager:
-    image: ${DOCKER_REGISTRY-}kafkamanager
+    image: poc_kafkamanager
     build:
       context: .
       dockerfile: KafkaManager/Dockerfile

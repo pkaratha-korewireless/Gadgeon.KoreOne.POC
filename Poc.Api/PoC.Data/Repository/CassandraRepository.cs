@@ -12,7 +12,7 @@ namespace PoC.Data.Repository
 {
     public class CassandraRepository : ICassandraRepository
     {
-        private readonly string END_POINT = "192.168.65.146";
+        private readonly string END_POINT = "DIBINLALTP-605";
         private readonly string KEY_SPACE = "koreone";
         private readonly string TABLE_NAME = "device_messages";
 
@@ -22,7 +22,7 @@ namespace PoC.Data.Repository
 
         public CassandraRepository()
         {
-            cluster = Cluster.Builder().AddContactPoint(END_POINT).Build();
+            cluster = Cluster.Builder().AddContactPoint(END_POINT).WithPort(9042).Build();
             session = cluster.Connect(KEY_SPACE);
             mapper = new Mapper(session);
         }

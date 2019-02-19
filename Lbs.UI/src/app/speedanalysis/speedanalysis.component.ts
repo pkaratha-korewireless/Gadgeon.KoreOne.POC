@@ -55,51 +55,35 @@ export class SpeedanalysisComponet implements OnInit {
   private hubConnection: signalR.HubConnection;
   testdata = [  
     {  
-        "IMEI":"000013612345680",
+        "IMEI":"000013612345678",
         "Speed":0
      },
+    {  
+       "IMEI":"000013612345680",
+       "Speed":0
+    },
     {  
        "IMEI":"000013612345681",
        "Speed":0
     },
     {  
-       "IMEI":"000013612345682",
-       "Speed":0
-    },
-    {  
+        "IMEI":"000013612345682",
+        "Speed":0
+     },
+     {  
         "IMEI":"000013612345683",
         "Speed":0
      },
      {  
-        "IMEI":"000013612345684",
+        "IMEI":"000013612345679",
         "Speed":0
-     },
-     {  
-        "IMEI":"000013612345685",
-        "Speed":0
-     },
-     {  
-        "IMEI":"000013612345686",
-        "Speed":0
-     },
-     {  
-         "IMEI":"000013612345687",
-         "Speed":0
-      },
-      {  
-         "IMEI":"000013612345688",
-         "Speed":0
-      },
-      {  
-         "IMEI":"000013612345689",
-         "Speed":0
-      }
+     }
  ]
  options:object;
 
   constructor(private livedata:LiveDataService) { 
-    this.jsonobjecttest = [{ 'name': 'lessthan20', 'y': 10 }, { 'name': 'lessthan40', 'y': 0 }, { 'name': 'lessthan40', 'y': 0 },
-  { 'name': 'lessthan60', 'y': 0}, { 'name': 'lessthan90', 'y': 0 }, { 'name': 'lessthan150', 'y': 0 }, { 'name': 'morethan150', 'y': 0 }];
+    this.jsonobjecttest = [{ 'name': '<20', 'y': 6 }, { 'name': '20-40', 'y': 0 },
+  { 'name': '40-60', 'y': 0}, { 'name': '60-90', 'y': 0 }, { 'name': '90-150', 'y': 0 }, { 'name': '>150', 'y': 0 }];
 
     this.options = {
 
@@ -127,7 +111,7 @@ export class SpeedanalysisComponet implements OnInit {
       },
       yAxis: {
         title: {
-          text: 'Speed range of vehicles'
+          text: ''
         }
       },
       "series": [
@@ -181,7 +165,7 @@ export class SpeedanalysisComponet implements OnInit {
     this.lessthan90count=0;
     this.lessthan150count=0;
     this.morethan150count=0;
-
+    this.tuppleAll = [];
     for (var i = 0; i < this.testdata.length; i++) {
        let parsedData = this.testdata;
       if (parsedData[i].Speed <= 20) {
@@ -223,8 +207,8 @@ export class SpeedanalysisComponet implements OnInit {
     }
     this.dataSource = new MatTableDataSource<any>(this.tuppleAll);
     this.dataSource.paginator = this.paginator;
-    this.jsonobject = [{ 'name': 'lessthan20', 'y': this.lessthan20count }, { 'name': 'lessthan40', 'y': this.lessthan40count }, { 'name': 'lessthan40', 'y': this.lessthan40count },
-    { 'name': 'lessthan60', 'y': this.lessthan60count }, { 'name': 'lessthan90', 'y': this.lessthan90count }, { 'name': 'lessthan150', 'y': this.lessthan150count }, { 'name': 'morethan150', 'y': this.morethan150count }];
+    this.jsonobject = [{ 'name': '<20', 'y': this.lessthan20count }, { 'name': '20-40', 'y': this.lessthan40count },
+    { 'name': '40-60', 'y': this.lessthan60count }, { 'name': '60-90', 'y': this.lessthan90count }, { 'name': '90-150', 'y': this.lessthan150count }, { 'name': '>150', 'y': this.morethan150count }];
 
     var that = this;
     this.options = {
@@ -259,7 +243,7 @@ export class SpeedanalysisComponet implements OnInit {
       },
       yAxis: {
         title: {
-          text: 'Speed range of vehicles'
+          text: ''
         }
       },
       "series": [
